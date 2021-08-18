@@ -16,10 +16,6 @@ export default {
     AddTicker,
     ListTickers,
   },
-  mounted() {
-    //this.loadTickers()
-    //console.log(this.loadTickers())
-  },
   methods: {
     ...mapActions(["loadTickers"]),
   },

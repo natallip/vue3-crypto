@@ -40,7 +40,6 @@ export default createStore({
 
         const t = ticker;
         t.price = price;
-        console.log(t);
         return t;
       }
       setInterval(() => {
