@@ -1,4 +1,4 @@
-# vue3-crypto
+# vue3
 
 ## Project setup
 ```

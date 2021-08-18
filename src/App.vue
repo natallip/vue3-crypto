@@ -1,15 +1,15 @@
 <template>
   <div class="container">
     <add-ticker></add-ticker>
-    <hr>
+    <hr />
     <list-tickers></list-tickers>
   </div>
 </template>
 
 <script>
-import AddTicker from "@/components/AddTicker"
-import ListTickers from './components/ListTickers.vue'
-import { mapActions } from "vuex"
+import AddTicker from "@/components/AddTicker";
+import ListTickers from "./components/ListTickers.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -21,9 +21,9 @@ export default {
     //console.log(this.loadTickers())
   },
   methods: {
-    ...mapActions(["loadTickers"])
-  }
-}
+    ...mapActions(["loadTickers"]),
+  },
+};
 </script>
 
 <style>

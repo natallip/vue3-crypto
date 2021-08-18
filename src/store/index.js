@@ -1,71 +1,52 @@
 import { createStore } from "vuex";
-// import config from "../config.json"
+import config from "../config.json";
 // import axios from "axios"
 
 export default createStore({
   state: {
-    tickers: [
-      {title: "BTC", price: 100},
-      {title: "SOL", price: 150}
-    ]
+    tickers: [],
   },
   getters: {
-    tickersTitles(state) {   
-      
-      return state.tickers.reduce((acc, curr) => {
-        // console.log(acc);
-        // console.log(state);
-        return [...acc, curr.title]}, []);        
-    }
+    tickersTitles(state) {
+      return state.tickers.reduce((acc, curr) => [...acc, curr.title], []);
+    },
   },
   mutations: {
-    setTickers (state, tickers) {
+    setTickers(state, tickers) {
       state.tickers = tickers;
     },
-    addTicker (state, ticker) {
+    addTicker(state, ticker) {
       state.tickers.push(ticker);
     },
-    deleteTicker(state, title) {
-      state.tickers = state.tickers.filter(t => t.title !== title);
-    }
+    deleteTicker(state, name) {
+      state.tickers = state.tickers.filter((t) => t.name !== name);
+    },
+    updateTicker(state, ticker) {
+      const ind = state.tickers.findIndex((t) => t.name === ticker.name);
+      if (state.tickers[ind]) {
+        state.tickers[ind].price = ticker.price;
+      }
+    },
   },
   actions: {
-    loadTickers ({commit}) {
-      //console.log("API_KEY", config.API_KEY);
+    subscribeToUpdate(context, newTicker) {
+      function update(ticker) {
+        const { API_KEY } = config.API_KEY;
+        const price = fetch(
+          `https://min-api.cryptocompare.com/data/price?fsym=${ticker.name}&tsyms=USD&api_key=${API_KEY}`
+        )
+          .then((res) => res.json())
+          .then((data) => data.USD);
 
-      // let getFullURL = function(url, options){
-      //   const params = [];
-      //   for (let key in options) {
-      //     params.push(`${key}=${options[key]}`);
-      //   }
-      //   return url + '?' + params.join("&");
-      // }
-      
-      // const apiKey = config.API_KEY;
-      
-      // const baseUrl = "https://min-api.cryptocompare.com/data/price"
-      
-      // let options = {
-      //   fsym: "BTC",
-      //   tsyms: "USD"
-      // };
-      
-      // let headers = {
-      //   "Authorization": "Apikey " + apiKey 
-      // };
-      
-      // let fullURL = getFullURL(baseUrl, options);
-      
-      // axios.get(fullURL, {headers: headers})
-      //   .then((response) => {
-      //     //console.log(response.data);
-      //     // console.log(response.status);
-      //     // console.log(response.statusText);
-      //     // console.log(response.headers);
-      //     //console.log(response.config);
-      //   });
-      
-      commit("setTickers");
-    }
-  }
+        const t = ticker;
+        t.price = price;
+        console.log(t);
+        return t;
+      }
+      setInterval(() => {
+        const ticker = update(newTicker);
+        context.commit("updateTicker", ticker);
+      }, 5000);
+    },
+  },
 });
