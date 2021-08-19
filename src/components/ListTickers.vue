@@ -1,10 +1,16 @@
 <template>
 	<ul class="tickers-list">
-		<li v-for="(ticker, i) in tickers" :key="i" class="ticker-item">
+		<li
+			v-for="(ticker, i) in tickers"
+			:key="i"
+			:class="{ active: selectedTicker === ticker.name }"
+			class="ticker-item"
+			@click="selectTicker(ticker)"
+		>
 			<div class="ticker-box">
 				<div class="ticker-title">{{ ticker.name }} - USD</div>
 				<div class="ticker-price">{{ normalizePrice(ticker.price) }}</div>
-				<button class="ticker-delete" @click="remove(ticker.name)">
+				<button class="ticker-delete" @click.stop="remove(ticker.name)">
 					<svg
 						viewBox="-57 0 512 512"
 						width="15"
@@ -33,17 +39,30 @@ import { mapState, mapMutations } from "vuex";
 
 export default {
 	computed: {
-		...mapState(["tickers"]),
+		...mapState(["tickers", "selectedTicker"]),
 	},
 	methods: {
-		...mapMutations(["deleteTicker"]),
+		...mapMutations(["deleteTicker", "setSelectedTicker", "clearGraph"]),
 		remove(name) {
+			if (name === this.selectedTicker) {
+				this.setSelectedTicker(null);
+			}
 			this.deleteTicker(name);
 		},
 		normalizePrice(price) {
 			if (price === "-") return price;
 			price = price > 0 ? price.toFixed(2) : price.toPressision(2);
 			return price;
+		},
+		selectTicker(ticker) {
+			this.setSelectedTicker(ticker.name);
+		},
+	},
+	watch: {
+		tickers() {
+			this.tickers.forEach((t) => {
+				window.localStorage.setItem(t.name, t.price);
+			});
 		},
 	},
 };
@@ -55,6 +74,7 @@ export default {
 	display: flex;
 	flex-wrap: wrap;
 	margin-left: -20px;
+	margin-top: 40px;
 	padding: 0;
 }
 .ticker-item {
@@ -63,9 +83,10 @@ export default {
 	margin-bottom: 20px;
 	text-align: center;
 	border-radius: 5px;
+	cursor: pointer;
 }
 .ticker-item.active {
-	box-shadow: 0 0 1px 2px #4e0281;
+	box-shadow: 0 0 1px 3px #4e0281;
 }
 .ticker-title {
 	padding: 10px 5px;
@@ -81,6 +102,7 @@ export default {
 	padding: 10px;
 	border: none;
 	background: transparent;
+	cursor: pointer;
 }
 .ticker-delete svg {
 	margin-right: 5px;

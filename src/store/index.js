@@ -4,10 +4,18 @@ import { loadTickers } from "../api";
 export default createStore({
 	state: {
 		tickers: [],
+		selectedTicker: null,
+		graph: [],
 	},
 	getters: {
-		tickersNames: (state) => {
+		tickersNames(state) {
 			return state.tickers.map((t) => t.name);
+		},
+		graphPrice(state) {
+			const selectedTicker = state.tickers.find(
+				(t) => t.name === state.selectedTicker
+			);
+			return selectedTicker?.price;
 		},
 	},
 	mutations: {
@@ -29,13 +37,16 @@ export default createStore({
 		updateTickers(state, tickers) {
 			state.tickers = tickers;
 		},
+		setSelectedTicker(state, ticker) {
+			state.selectedTicker = ticker;
+		},
 	},
 	actions: {
 		subscribeToUpdate(context) {
 			setInterval(async () => {
 				const tickers = await loadTickers(context.getters.tickersNames);
 				context.commit("updateTickers", tickers);
-			}, 5000);
+			}, 3000);
 		},
 	},
 });

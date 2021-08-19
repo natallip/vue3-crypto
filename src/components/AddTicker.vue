@@ -19,7 +19,7 @@
 				x="0px"
 				y="0px"
 				viewBox="0 0 512 512"
-				style="enable-background:new 0 0 512 512;"
+				style="enable-background: new 0 0 512 512"
 				width="20"
 				height="20"
 				xml:space="preserve"
@@ -51,7 +51,6 @@
 </template>
 
 <script>
-// import { loadTickers } from "../api";
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -83,8 +82,9 @@ export default {
 
 <style scoped>
 .addTicker {
-	margin-top: 30px;
+	margin-top: 50px;
 	text-align: left;
+	margin-bottom: 2px;
 }
 .ticker-label {
 	margin-right: 10px;
