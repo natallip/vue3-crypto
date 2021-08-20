@@ -1,15 +1,18 @@
+import axios from "axios";
 import { createStore } from "vuex";
 import { loadTickers } from "../api";
+import config from "../config.json";
 
 export default createStore({
 	state: {
 		tickers: [],
+		avaibleTickers: [],
 		selectedTicker: null,
 		graph: [],
 	},
 	getters: {
 		tickersNames(state) {
-			return state.tickers.map((t) => t.name);
+			return state.tickers?.map((t) => t.name);
 		},
 		graphPrice(state) {
 			const selectedTicker = state.tickers.find(
@@ -19,9 +22,6 @@ export default createStore({
 		},
 	},
 	mutations: {
-		setTickers(state, tickers) {
-			state.tickers = tickers;
-		},
 		addTicker(state, ticker) {
 			state.tickers = [...state.tickers, ticker];
 		},
@@ -40,8 +40,17 @@ export default createStore({
 		setSelectedTicker(state, ticker) {
 			state.selectedTicker = ticker;
 		},
+		setAvaibleTickers(state, tickers) {
+			state.avaibleTickers = tickers;
+		},
 	},
 	actions: {
+		async loadAvaibleTickers({ commit }) {
+			const response = await axios.get(config.URL_COINS);
+			const data = await response.data.Data;
+			const tickers = Object.keys(data);
+			commit("setAvaibleTickers", tickers);
+		},
 		subscribeToUpdate(context) {
 			setInterval(async () => {
 				const tickers = await loadTickers(context.getters.tickersNames);

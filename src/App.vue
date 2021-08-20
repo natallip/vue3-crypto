@@ -12,7 +12,7 @@
 import AddTicker from "@/components/AddTicker";
 import ListTickers from "@/components/ListTickers.vue";
 import GraphForPrice from "@/components/GraphForPrice.vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
 	components: {
@@ -23,15 +23,9 @@ export default {
 	computed: {
 		...mapState(["tickers", "selectedTicker"]),
 	},
-	created() {
-		const keys = Object.keys(window.localStorage);
-		for (let key of keys) {
-			console.log(111, key);
-		}
-		//window.localStorage.setItem()
-	},
 	methods: {
-		...mapActions(["loadTickers"]),
+		...mapMutations(["addTicker"]),
+		...mapActions(["subscribeToUpdate"]),
 	},
 };
 </script>

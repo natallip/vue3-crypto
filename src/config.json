@@ -1,1 +1,2 @@
-{"API_KEY": "741d904db8c263634a31f52878f49e9d1d5a310a4d8b13f2e66fb1866e70f5dc"}
+{"API_KEY": "741d904db8c263634a31f52878f49e9d1d5a310a4d8b13f2e66fb1866e70f5dc",
+"URL_COINS": "https://min-api.cryptocompare.com/data/all/coinlist?summary=true"}
