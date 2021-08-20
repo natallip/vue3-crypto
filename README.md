@@ -1,6 +1,6 @@
 # vue3
 
-[result](https://github.com/natallip/vue3-crypto)
+[result](https://natallip.github.io/vue3-crypto/)
 
 ## Project setup
 ```
@@ -21,6 +21,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://natallip.github.io/vue3-crypto/).
