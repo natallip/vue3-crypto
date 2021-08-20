@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 import { loadTickers } from "../api";
 import config from "../config.json";
 
+
 export default createStore({
 	state: {
 		tickers: [],
@@ -23,7 +24,7 @@ export default createStore({
 	},
 	mutations: {
 		addTicker(state, ticker) {
-			state.tickers = [...state.tickers, ticker];
+			state.tickers?.push(ticker);
 		},
 		deleteTicker(state, name) {
 			state.tickers = state.tickers.filter((t) => t.name !== name);
@@ -46,13 +47,17 @@ export default createStore({
 	},
 	actions: {
 		async loadAvaibleTickers({ commit }) {
+
 			const response = await axios.get(config.URL_COINS);
-			const data = await response.data.Data;
+			const data = response.data.Data;
 			const tickers = Object.keys(data);
 			commit("setAvaibleTickers", tickers);
 		},
 		subscribeToUpdate(context) {
 			setInterval(async () => {
+				if (!context.getters.tickersNames) {
+					return;
+				}
 				const tickers = await loadTickers(context.getters.tickersNames);
 				context.commit("updateTickers", tickers);
 			}, 3000);

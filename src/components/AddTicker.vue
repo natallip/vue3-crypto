@@ -59,6 +59,12 @@ export default {
 			this.ticker = "";
 		},
 	},
+	watch: {
+		tickersNames(names) {
+			if (names?.lenght === 0) return;
+			window.localStorage.setItem("crypto-tickers", JSON.stringify(names));
+		},
+	},
 };
 </script>
 

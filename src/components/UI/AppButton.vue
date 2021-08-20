@@ -3,7 +3,7 @@
 		<app-icon type="add" />
 		Добавить
 	</button>
-	<button v-if="type === 'delete'" class="button" @click="$emit('delete')">
+	<button v-if="type === 'delete'" class="button" @click.stop="$emit('delete')">
 		<app-icon type="delete" />
 		Удалить
 	</button>

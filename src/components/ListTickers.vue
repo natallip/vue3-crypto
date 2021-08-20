@@ -3,9 +3,9 @@
 		<li
 			v-for="(ticker, i) in tickers"
 			:key="i"
-			:class="{ active: isSelected }"
+			:class="{ active: isSelected(ticker.name) }"
 			class="ticker-item"
-			@click="selectTicker(ticker)"
+			@click="selectTicker(ticker.name)"
 		>
 			<div class="ticker-box">
 				<h2 class="ticker-title">{{ ticker.name }} - USD</h2>
@@ -31,9 +31,6 @@ export default {
 	components: { AppButton },
 	computed: {
 		...mapState(["tickers", "selectedTicker"]),
-		isSelected() {
-			return this.selectedTicker === this.ticker.name;
-		},
 	},
 	methods: {
 		...mapMutations(["deleteTicker", "setSelectedTicker", "clearGraph"]),
@@ -55,7 +52,10 @@ export default {
 			return price;
 		},
 		selectTicker(ticker) {
-			this.setSelectedTicker(ticker.name);
+			this.setSelectedTicker(ticker);
+		},
+		isSelected(ticker) {
+			return this.selectedTicker === ticker;
 		},
 	},
 };

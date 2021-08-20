@@ -1,9 +1,9 @@
 <template>
 	<div class="container">
 		<add-ticker></add-ticker>
-		<hr v-if="tickers.length" />
+		<hr v-if="tickers?.length" />
 		<list-tickers></list-tickers>
-		<hr v-if="tickers.length" />
+		<hr v-if="tickers?.length" />
 		<graph-for-price v-if="selectedTicker"></graph-for-price>
 	</div>
 </template>
@@ -22,6 +22,19 @@ export default {
 	},
 	computed: {
 		...mapState(["tickers", "selectedTicker"]),
+	},
+	async created() {
+		const tickersData = localStorage.getItem("crypto-tickers");
+		if (tickersData) {
+			JSON.parse(tickersData).forEach((t) => {
+				const newTicker = {
+					name: t,
+					price: "-",
+				};
+				this.addTicker(newTicker);
+			});
+			await this.subscribeToUpdate();
+		}
 	},
 	methods: {
 		...mapMutations(["addTicker"]),
