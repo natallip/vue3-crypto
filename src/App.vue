@@ -12,7 +12,7 @@
 import AddTicker from "@/components/AddTicker";
 import ListTickers from "@/components/ListTickers.vue";
 import GraphForPrice from "@/components/GraphForPrice.vue";
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
 	components: {
@@ -21,11 +21,11 @@ export default {
 		GraphForPrice,
 	},
 	computed: {
-		...mapState(["tickers", "selectedTicker"]),
+		...mapState("tickers", ["tickers", "selectedTicker"]),
 	},
 	async created() {
-		const tickersData = localStorage.getItem("crypto-tickers");
-		if (tickersData) {
+		const tickersData = window.localStorage.getItem("crypto-tickers");
+		if (tickersData !== "undefined") {
 			JSON.parse(tickersData).forEach((t) => {
 				const newTicker = {
 					name: t,
@@ -33,12 +33,14 @@ export default {
 				};
 				this.addTicker(newTicker);
 			});
-			await this.subscribeToUpdate();
+			setInterval(async () => {
+				await this.subscribeToUpdate();
+			}, 5000);
 		}
 	},
 	methods: {
-		...mapMutations(["addTicker"]),
-		...mapActions(["subscribeToUpdate"]),
+		...mapMutations("tickers", ["addTicker"]),
+		...mapActions("tickers", ["subscribeToUpdate"]),
 	},
 };
 </script>
@@ -58,11 +60,11 @@ export default {
 
 #nav a {
 	font-weight: bold;
-	color: #2c3e50;
+	color: #555;
 }
 
 #nav a.router-link-exact-active {
-	color: #42b983;
+	color: #555;
 }
 .container {
 	max-width: 1200px;

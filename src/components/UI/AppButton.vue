@@ -44,10 +44,10 @@ export default {
 .fill {
 	display: flex;
 	align-items: center;
-	background: #444;
+	background: #555;
 	color: #fff;
 	padding: 3px 5px;
-	border: 5px solid #444;
+	border: 5px solid #555;
 	border-radius: 18px;
 	cursor: pointer;
 }

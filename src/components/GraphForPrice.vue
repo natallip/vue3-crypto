@@ -16,8 +16,9 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
 import AppButton from "./UI/AppButton.vue";
+import { mapGetters, mapMutations, mapState } from "vuex";
+
 export default {
 	name: "GraphForPrice",
 	data() {
@@ -27,11 +28,11 @@ export default {
 	},
 	components: { AppButton },
 	computed: {
-		...mapState(["selectedTicker"]),
-		...mapGetters(["graphPrice"]),
+		...mapState("tickers", ["selectedTicker"]),
+		...mapGetters("graph", ["graphPrice"]),
 	},
 	methods: {
-		...mapMutations(["setSelectedTicker"]),
+		...mapMutations("tickers", ["setSelectedTicker"]),
 		closeGraph() {
 			this.setSelectedTicker(null);
 		},
@@ -39,16 +40,17 @@ export default {
 			const maxValue = Math.max(...this.graph);
 			const minValue = Math.min(...this.graph);
 			return this.graph.map((item) => {
-				return 5 + ((item - minValue) * 95) / (maxValue - minValue);
+				return 5 + ((item - minValue) * 95) / (maxValue - minValue) || 5;
 			});
 		},
 	},
 	watch: {
 		selectedTicker() {
 			this.graph = [];
+			this.normalizeGraph();
 		},
-		graphPrice(newV) {
-			this.graph.push(newV);
+		graphPrice(value) {
+			this.graph.push(value);
 			if (this.graph.length > 20) this.graph.shift();
 		},
 	},
@@ -59,8 +61,8 @@ export default {
 .graph {
 	position: relative;
 	margin-top: 30px;
-	border-bottom: 1px solid #444;
-	border-left: 1px solid #444;
+	border-bottom: 1px solid #555;
+	border-left: 1px solid #555;
 }
 .graph-name {
 	text-align: left;

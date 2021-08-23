@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import AppButton from "./UI/AppButton.vue";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
 	data() {
@@ -33,36 +33,36 @@ export default {
 		await this.loadAvaibleTickers();
 	},
 	computed: {
-		...mapState(["tickers", "avaibleTickers"]),
-		...mapGetters(["tickersNames"]),
+		...mapState("tickers", ["tickers", "avaibleTickers"]),
+		...mapGetters("tickers", ["tickersNames"]),
 		isTickerExist() {
 			return this.tickers?.find((t) => t.name === this.ticker.toUpperCase());
 		},
 		isAvaible() {
-			return this.avaibleTickers.find((t) => t === this.ticker.toUpperCase());
+			return this.avaibleTickers?.find((t) => t === this.ticker.toUpperCase());
 		},
 	},
 	methods: {
-		...mapMutations(["addTicker", "updateTickers"]),
-		...mapActions(["subscribeToUpdate", "loadAvaibleTickers"]),
-		async add() {
+		...mapMutations("tickers", ["addTicker", "updateTickers"]),
+		...mapActions("tickers", ["loadAvaibleTickers", "subscribeToUpdate"]),
+		add() {
 			if (this.ticker.lenght === 0 || this.isTickerExist || !this.isAvaible) {
 				this.ticker = "";
 				return;
 			}
-			let newTicker = {
+			const newTicker = {
 				name: this.ticker.toUpperCase(),
 				price: "-",
 			};
 			this.addTicker(newTicker);
-			await this.subscribeToUpdate();
+			setInterval(async () => {
+				await this.subscribeToUpdate();
+			}, 5000);
 			this.ticker = "";
-		},
-	},
-	watch: {
-		tickersNames(names) {
-			if (names?.lenght === 0) return;
-			window.localStorage.setItem("crypto-tickers", JSON.stringify(names));
+			window.localStorage.setItem(
+				"crypto-tickers",
+				JSON.stringify(this.tickersNames)
+			);
 		},
 	},
 };
@@ -82,5 +82,7 @@ export default {
 }
 .ticker-input input {
 	padding: 5px;
+	border: none;
+	border-bottom: 2px solid #555;
 }
 </style>

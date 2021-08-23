@@ -1,8 +1,8 @@
 <template>
 	<ul class="tickers-list">
 		<li
-			v-for="(ticker, i) in tickers"
-			:key="i"
+			v-for="ticker in tickers"
+			:key="ticker"
 			:class="{ active: isSelected(ticker.name) }"
 			class="ticker-item"
 			@click="selectTicker(ticker.name)"
@@ -19,37 +19,36 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
 import AppButton from "./UI/AppButton.vue";
+import { mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
-	data() {
-		return {
-			countOnPage: 6,
-		};
-	},
 	components: { AppButton },
 	computed: {
-		...mapState(["tickers", "selectedTicker"]),
+		...mapState("tickers", ["tickers", "selectedTicker"]),
+		...mapGetters("tickers", ["tickersNames"]),
 	},
 	methods: {
-		...mapMutations(["deleteTicker", "setSelectedTicker", "clearGraph"]),
-		remove(name) {
+		...mapMutations("tickers", ["deleteTicker", "setSelectedTicker"]),
+		async remove(name) {
 			if (name === this.selectedTicker) {
 				this.setSelectedTicker(null);
 			}
 			this.deleteTicker(name);
+			window.localStorage.setItem(
+				"crypto-tickers",
+				JSON.stringify(this.tickersNames)
+			);
 		},
 		normalizePrice(price) {
 			if (price === "-" || !price) {
 				return "-";
 			}
 			if (price > 0) {
-				price = price.toFixed(2);
+				return price.toFixed(2);
 			} else {
-				price = price.toFixed(4);
+				return price.toFixed(4);
 			}
-			return price;
 		},
 		selectTicker(ticker) {
 			this.setSelectedTicker(ticker);
@@ -83,6 +82,11 @@ export default {
 }
 .ticker-item.active {
 	box-shadow: 0 0 1px 3px #4e0281;
+}
+.ticker-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 .ticker-title {
 	padding: 10px 5px;
