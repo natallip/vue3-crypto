@@ -23,7 +23,7 @@ export default {
 	name: "GraphForPrice",
 	data() {
 		return {
-			graph: [],
+			graph: [0],
 		};
 	},
 	components: { AppButton },
