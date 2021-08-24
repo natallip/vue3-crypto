@@ -30,7 +30,7 @@ export default {
 	},
 	methods: {
 		...mapMutations("tickers", ["deleteTicker", "setSelectedTicker"]),
-		async remove(name) {
+		remove(name) {
 			if (name === this.selectedTicker) {
 				this.setSelectedTicker(null);
 			}

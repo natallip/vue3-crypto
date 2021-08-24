@@ -23,7 +23,7 @@ export default {
 	computed: {
 		...mapState("tickers", ["tickers", "selectedTicker"]),
 	},
-	async created() {
+	created() {
 		const tickersData = window.localStorage.getItem("crypto-tickers");
 		if (tickersData !== "undefined") {
 			JSON.parse(tickersData).forEach((t) => {
