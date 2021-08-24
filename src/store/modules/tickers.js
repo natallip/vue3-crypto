@@ -15,6 +15,9 @@ export const tickers = {
 	},
 	mutations: {
 		addTicker(state, ticker) {
+			if (!state.tickers) {
+				state.tickers = [];
+			}
 			state.tickers.push(ticker);
 		},
 		deleteTicker(state, name) {
