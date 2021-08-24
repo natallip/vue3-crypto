@@ -1,7 +1,7 @@
 export const graph = {
 	namespaced: true,
 	state: {
-		graph: [],
+		graph: [0],
 	},
 	getters: {
 		graphPrice(state, getters, rootState) {
