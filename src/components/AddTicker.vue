@@ -57,7 +57,7 @@ export default {
 			this.addTicker(newTicker);
 			setInterval(async () => {
 				await this.subscribeToUpdate();
-			}, 5000);
+			}, 3000);
 			this.ticker = "";
 			window.localStorage.setItem(
 				"crypto-tickers",

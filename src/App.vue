@@ -35,7 +35,7 @@ export default {
 			});
 			setInterval(async () => {
 				await this.subscribeToUpdate();
-			}, 5000);
+			}, 3000);
 		}
 	},
 	methods: {
