@@ -1,32 +1,26 @@
 <template>
-	<ul class="tickers-list">
+	<ul class="tickers">
 		<li
 			v-for="ticker in tickers"
+			class="tickers__item"
 			:key="ticker"
 			:class="{ active: isSelected(ticker.name) }"
-			class="ticker-item"
-			@click="selectTicker(ticker.name)"
+			@click="setSelectedTicker(ticker.name)"
 		>
-			<div class="ticker-box">
-				<h2 class="ticker-title">{{ ticker.name }} - USD</h2>
-				<div class="ticker-price">{{ normalizePrice(ticker.price) }}</div>
-				<div class="ticker-delete">
-					<app-button type="delete" @delete="remove(ticker.name)" />
-				</div>
-			</div>
+			<app-ticker :ticker="ticker" @delete="remove" />
 		</li>
 	</ul>
 </template>
 
 <script>
-import AppButton from "./UI/AppButton.vue";
-import { mapState, mapMutations, mapGetters } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
+import AppTicker from "./AppTicker.vue";
 
 export default {
-	components: { AppButton },
+	components: { AppTicker },
 	computed: {
-		...mapState("tickers", ["tickers", "selectedTicker"]),
-		...mapGetters("tickers", ["tickersNames"]),
+		...mapState("tickers", ["selectedTicker"]),
+		...mapGetters("tickers", ["tickers"]),
 	},
 	methods: {
 		...mapMutations("tickers", ["deleteTicker", "setSelectedTicker"]),
@@ -34,24 +28,8 @@ export default {
 			if (name === this.selectedTicker) {
 				this.setSelectedTicker(null);
 			}
+
 			this.deleteTicker(name);
-			window.localStorage.setItem(
-				"crypto-tickers",
-				JSON.stringify(this.tickersNames)
-			);
-		},
-		normalizePrice(price) {
-			if (price === "-" || !price) {
-				return "-";
-			}
-			if (price > 0) {
-				return price.toFixed(2);
-			} else {
-				return price.toFixed(4);
-			}
-		},
-		selectTicker(ticker) {
-			this.setSelectedTicker(ticker);
 		},
 		isSelected(ticker) {
 			return this.selectedTicker === ticker;
@@ -61,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-.tickers-list {
+.tickers {
 	list-style: none;
 	display: flex;
 	flex-wrap: wrap;
@@ -69,7 +47,7 @@ export default {
 	margin-top: 40px;
 	padding: 0;
 }
-.ticker-item {
+.tickers__item {
 	width: 30%;
 	display: flex;
 	flex-direction: column;
@@ -80,25 +58,7 @@ export default {
 	border-radius: 5px;
 	cursor: pointer;
 }
-.ticker-item.active {
+.tickers__item.active {
 	box-shadow: 0 0 1px 3px #4e0281;
-}
-.ticker-box {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.ticker-title {
-	padding: 10px 5px;
-	font-size: 1rem;
-	text-transform: uppercase;
-}
-.ticker-price {
-	padding: 10px;
-	font-size: 2rem;
-	font-weight: bold;
-}
-.ticker-delete {
-	padding: 10px;
 }
 </style>

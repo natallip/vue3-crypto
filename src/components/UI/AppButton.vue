@@ -1,14 +1,7 @@
 <template>
-	<button v-if="type === 'add'" class="button fill" @click="$emit('add')">
-		<app-icon type="add" />
-		Добавить
-	</button>
-	<button v-if="type === 'delete'" class="button" @click.stop="$emit('delete')">
-		<app-icon type="delete" />
-		Удалить
-	</button>
-	<button v-if="type === 'close'" class="button" @click="$emit('close')">
-		<app-icon type="close" />
+	<button :class="classes" @click.capture.stop="$emit('click')">
+		<app-icon :id="icon" />
+		{{ text }}
 	</button>
 </template>
 
@@ -18,15 +11,19 @@ export default {
 	name: "AppButton",
 	props: {
 		type: String,
-		ticker: String,
+		icon: String,
+		text: String,
 	},
 	components: {
 		AppIcon,
 	},
+	computed: {
+		classes() {
+			return `button button--${this.type} button--${this.icon}`;
+		},
+	},
 	emits: {
-		add: null,
-		delete: null,
-		close: null,
+		click: null,
 	},
 };
 </script>
@@ -41,17 +38,25 @@ export default {
 	outline: transparent;
 	padding: 0;
 }
-.fill {
-	display: flex;
-	align-items: center;
+.button--primary {
 	background: #555;
+	color: #fff;
+	padding: 5px;
+	/* border: 5px solid #555; */
+	border-radius: 18px;
+}
+.button--warn {
+	background: #9c0707;
+	border-radius: 18px;
+	padding: 5px;
+	color: #fff;
+	/* background: #555;
 	color: #fff;
 	padding: 3px 5px;
 	border: 5px solid #555;
-	border-radius: 18px;
-	cursor: pointer;
+	border-radius: 18px; */
 }
-.close {
+.button--close {
 	border: none;
 	background: transparent;
 	outline: transparent;

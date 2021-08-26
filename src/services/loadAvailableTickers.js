@@ -2,7 +2,7 @@ import { axiosInstance } from "./index";
 import config from "../config.json";
 const { URL_COINS } = config;
 
-export const loadAviableTickers = async () => {
+export const loadAvailableTickers = async () => {
 	const {
 		data: { Data },
 	} = await axiosInstance({
@@ -11,5 +11,5 @@ export const loadAviableTickers = async () => {
 			summary: true,
 		},
 	});
-	return Object.keys(Data);
+	return Object.keys(Data) || [];
 };

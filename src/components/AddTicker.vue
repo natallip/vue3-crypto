@@ -1,68 +1,63 @@
 <template>
 	<div class="addTicker">
-		<label for="ticker" class="ticker-label">Тикер</label>
-		<div class="ticker-input">
-			<input
-				type="text"
-				name="ticker"
-				id="ticker"
-				lass="ticker-input"
-				placeholder="Например DOGE"
-				v-model.trim="ticker"
-				@keydown.enter="add"
-			/>
-		</div>
-		<app-button type="add" @add="add" />
+		<app-input
+			name="ticker"
+			placeholder="Например DOGE"
+			label="Тикер"
+			:value="tickerName"
+			@change="setTickerName"
+			@enter="add"
+		/>
+		<app-button type="primary" icon="add" text="Добавить" @click="add" />
 	</div>
 </template>
 
 <script>
-import AppButton from "./UI/AppButton.vue";
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import AppButton from "./UI/AppButton.vue";
+import AppInput from "./UI/AppInput.vue";
+import { normalizedTickerName } from "../utils/normalizeTickerName";
 
 export default {
-	data() {
-		return {
-			ticker: "",
-		};
-	},
 	components: {
 		AppButton,
+		AppInput,
 	},
 	async created() {
-		await this.loadAvaibleTickers();
+		await this.loadAvailableTickers();
 	},
 	computed: {
-		...mapState("tickers", ["tickers", "avaibleTickers"]),
-		...mapGetters("tickers", ["tickersNames"]),
+		...mapState("tickers", ["tickerName", "availableTickers"]),
+		...mapGetters("tickers", ["tickersNames", "tickers"]),
 		isTickerExist() {
-			return this.tickers?.find((t) => t.name === this.ticker.toUpperCase());
+			return this.tickers.find((t) => t.name === this.tickerName);
 		},
-		isAvaible() {
-			return this.avaibleTickers?.find((t) => t === this.ticker.toUpperCase());
+		isAvailable() {
+			return this.availableTickers?.find((t) => t === this.tickerName);
 		},
 	},
 	methods: {
-		...mapMutations("tickers", ["addTicker", "updateTickers"]),
-		...mapActions("tickers", ["loadAvaibleTickers", "subscribeToUpdate"]),
+		...mapMutations("tickers", ["addTicker", "updateTickers", "changeTickerName"]),
+		...mapActions("tickers", ["loadAvailableTickers", "subscribeToUpdate"]),
+		setTickerName(value) {
+			this.changeTickerName(normalizedTickerName(value));
+		},
 		add() {
-			if (this.ticker.lenght === 0 || this.isTickerExist || !this.isAvaible) {
-				this.ticker = "";
+			if (!this.tickerName || this.isTickerExist || !this.isAvailable) {
+				this.changeTickerName("");
 				return;
 			}
-			const newTicker = {
-				name: this.ticker.toUpperCase(),
+
+			this.addTicker({
+				name: this.tickerName,
 				price: "-",
-			};
-			this.addTicker(newTicker);
+			});
+
+			this.changeTickerName("");
+
 			setInterval(async () => {
 				await this.subscribeToUpdate();
 			}, 3000);
-			this.ticker = "";
-			window.localStorage.setItem(
-				"crypto-tickers",
-				JSON.stringify(this.tickersNames)
-			);
 		},
 	},
 };
@@ -73,16 +68,5 @@ export default {
 	margin-top: 50px;
 	text-align: left;
 	margin-bottom: 2px;
-}
-.ticker-label {
-	margin-right: 10px;
-}
-.ticker-input {
-	margin: 10px 0;
-}
-.ticker-input input {
-	padding: 5px;
-	border: none;
-	border-bottom: 2px solid #555;
 }
 </style>

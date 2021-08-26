@@ -10,17 +10,18 @@
 			></li>
 		</ul>
 		<div class="graph-close">
-			<app-button type="close" @close="closeGraph" />
+			<app-button type="primary" icon="close" @click="closeGraph" />
 		</div>
 	</div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations } from "vuex";
 import AppButton from "./UI/AppButton.vue";
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { MIN_HEIGHT_GRAPH, MAX_COLS_IN_GRAPH } from "../constants/index";
 
 export default {
-	name: "GraphForPrice",
+	name: "GraphForTicker",
 	data() {
 		return {
 			graph: [],
@@ -29,29 +30,43 @@ export default {
 	components: { AppButton },
 	computed: {
 		...mapState("tickers", ["selectedTicker"]),
-		...mapGetters("graph", ["graphPrice"]),
+		...mapGetters("tickers", ["tickers"]),
+		price() {
+			const selectedTicker = this.tickers.find((t) => t.name === this.selectedTicker);
+			return selectedTicker?.price;
+		},
 	},
 	methods: {
 		...mapMutations("tickers", ["setSelectedTicker"]),
 		closeGraph() {
 			this.setSelectedTicker(null);
+			this.graph = [];
 		},
 		normalizeGraph() {
 			const maxValue = Math.max(...this.graph);
 			const minValue = Math.min(...this.graph);
-			return this.graph.map((item) => {
-				return 5 + ((item - minValue) * 95) / (maxValue - minValue) || 5;
+
+			let graph = this.graph.map((item) => {
+				return (
+					MIN_HEIGHT_GRAPH +
+						((item - minValue) * (100 - MIN_HEIGHT_GRAPH)) / (maxValue - minValue) ||
+					MIN_HEIGHT_GRAPH
+				);
 			});
+
+			if (graph.length > MAX_COLS_IN_GRAPH) {
+				graph.shift();
+			}
+
+			return graph;
 		},
 	},
 	watch: {
 		selectedTicker() {
 			this.graph = [];
-			this.normalizeGraph();
 		},
-		graphPrice(value) {
+		price(value) {
 			this.graph.push(value);
-			if (this.graph.length > 20) this.graph.shift();
 		},
 	},
 };

@@ -1,6 +1,15 @@
 # vue3
 
-[result](https://natallip.github.io/vue3-crypto/)
+Разработка приложения, которое позволяет отслеживания изменения цен на криптовалюты. 
+
+Посмотреть результат можно здесь:  [result](https://natallip.github.io/vue3-crypto/)
+
+Стэк технологий: Vue.js, Vuex, axios
+
+Тикеры можно добавлять, удалять, при нажатии на определенный тикер будет отображаться график.
+
+Данные будут приходить с https://min-api.cryptocompare.com/.
+
 
 ## Project setup
 ```

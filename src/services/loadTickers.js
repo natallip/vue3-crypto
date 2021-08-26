@@ -8,7 +8,7 @@ export const loadTickers = async (tickersNames) => {
 	const { data } = await axiosInstance({
 		url: "data/pricemulti",
 		params: {
-			fsyms: fsyms,
+			fsyms,
 			tsyms: "USD",
 			api_key: API_KEY,
 		},
