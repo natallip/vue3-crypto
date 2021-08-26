@@ -7,15 +7,15 @@ const tickersHandlers = new Map();
 let socket = new WebSocket(`wss://streamer.cryptocompare.com/v2?api_key=${API_KEY}`);
 
 socket.addEventListener("message", (e) => {
-	const { TYPE: type, FROMSYMBOL: currency, PRICE: price } = JSON.parse(e.data);
+	const { TYPE: type, FROMSYMBOL: currency, PRICE: newPrice } = JSON.parse(e.data);
 
-	if (type !== AGGREGATE_INDEX) {
+	if (type !== AGGREGATE_INDEX && !newPrice) {
 		return;
 	}
 
 	const handlers = tickersHandlers.get(currency) || [];
 
-	handlers.forEach((fn) => fn(price));
+	handlers.forEach((fn) => fn(newPrice));
 });
 
 function sendToWs(message) {

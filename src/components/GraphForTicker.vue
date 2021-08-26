@@ -36,6 +36,9 @@ export default {
 
 			return selectedTicker?.price;
 		},
+		// graphLength() {
+		// 	return true;
+		// },
 	},
 	methods: {
 		...mapMutations("tickers", ["setSelectedTicker"]),
@@ -47,17 +50,15 @@ export default {
 			const maxValue = Math.max(...this.graph);
 			const minValue = Math.min(...this.graph);
 
+			if (this.graph.length > MAX_COLS_IN_GRAPH) {
+				this.graph.shift();
+			}
+
 			let graph = this.graph.map((item) => {
 				return (
-					MIN_HEIGHT_GRAPH +
-						((item - minValue) * (100 - MIN_HEIGHT_GRAPH)) / (maxValue - minValue) ||
-					MIN_HEIGHT_GRAPH
+					MIN_HEIGHT_GRAPH + ((item - minValue) * (100 - MIN_HEIGHT_GRAPH)) / (maxValue - minValue)
 				);
 			});
-
-			if (graph.length > MAX_COLS_IN_GRAPH) {
-				graph = graph.shift();
-			}
 
 			return graph;
 		},
