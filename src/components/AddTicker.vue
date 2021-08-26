@@ -42,7 +42,7 @@ export default {
 		setTickerName(value) {
 			this.changeTickerName(normalizedTickerName(value));
 		},
-		add() {
+		async add() {
 			if (!this.tickerName || this.isTickerExist || !this.isAvailable) {
 				this.changeTickerName("");
 				return;
@@ -53,11 +53,9 @@ export default {
 				price: "-",
 			});
 
-			this.changeTickerName("");
+			await this.subscribeToUpdate(this.tickerName);
 
-			setInterval(async () => {
-				await this.subscribeToUpdate();
-			}, 3000);
+			this.changeTickerName("");
 		},
 	},
 };

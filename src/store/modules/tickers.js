@@ -1,5 +1,5 @@
 import { loadAvailableTickers } from "../../services/loadAvailableTickers";
-import { loadTickers } from "../../services/loadTickers";
+import { subscribeToUpdate, unsubscribeToUpdate } from "../../services/updateTickers";
 
 export const tickers = {
 	namespaced: true,
@@ -31,13 +31,12 @@ export const tickers = {
 		deleteTicker(state, name) {
 			state.tickers = state.tickers.filter((t) => t.name !== name);
 		},
-		updateTicker(state, ticker) {
-			const ind = state.tickers.findIndex((t) => t.name === ticker.name);
+		updatePrice(state, data) {
+			const ind = state.tickers.findIndex((t) => t.name === data[0]);
 
-			state.tickers[ind].price = ticker.price;
-		},
-		updateTickers(state, tickers) {
-			state.tickers = tickers;
+			if (state.tickers[ind]) {
+				state.tickers[ind].price = data[1];
+			}
 		},
 		setSelectedTicker(state, ticker) {
 			state.selectedTicker = ticker;
@@ -52,14 +51,15 @@ export const tickers = {
 
 			commit("setAvailableTickers", tickers);
 		},
-		async subscribeToUpdate({ commit, getters: { tickersNames } }) {
-			if (!tickersNames) {
-				return;
-			}
+		async subscribeToUpdate({ commit }, tickerName) {
+			await subscribeToUpdate(tickerName, (newPrice) => {
+				commit("updatePrice", [tickerName, newPrice]);
+			});
+		},
+		async unsubscribeToUpdate({ commit }, tickerName) {
+			await unsubscribeToUpdate(tickerName);
 
-			const tickers = await loadTickers(tickersNames);
-
-			commit("updateTickers", tickers);
+			commit("deleteTicker", tickerName);
 		},
 	},
 };

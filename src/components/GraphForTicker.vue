@@ -33,6 +33,7 @@ export default {
 		...mapGetters("tickers", ["tickers"]),
 		price() {
 			const selectedTicker = this.tickers.find((t) => t.name === this.selectedTicker);
+
 			return selectedTicker?.price;
 		},
 	},
@@ -55,7 +56,7 @@ export default {
 			});
 
 			if (graph.length > MAX_COLS_IN_GRAPH) {
-				graph.shift();
+				graph = graph.shift();
 			}
 
 			return graph;
