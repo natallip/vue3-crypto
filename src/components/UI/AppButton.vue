@@ -1,6 +1,6 @@
 <template>
 	<button :class="classes" @click.capture.stop="$emit('click')">
-		<app-icon :id="icon" />
+		<app-icon v-if="icon" :id="icon" />
 		{{ text }}
 	</button>
 </template>
@@ -19,6 +19,9 @@ export default {
 	},
 	computed: {
 		classes() {
+			if (!this.icon) {
+				return `button button--${this.type}`;
+			}
 			return `button button--${this.type} button--${this.icon}`;
 		},
 	},
@@ -42,7 +45,6 @@ export default {
 	background: #555;
 	color: #fff;
 	padding: 5px;
-	/* border: 5px solid #555; */
 	border-radius: 18px;
 }
 .button--warn {
@@ -50,16 +52,18 @@ export default {
 	border-radius: 18px;
 	padding: 5px;
 	color: #fff;
-	/* background: #555;
-	color: #fff;
-	padding: 3px 5px;
-	border: 5px solid #555;
-	border-radius: 18px; */
 }
 .button--close {
 	border: none;
 	background: transparent;
 	outline: transparent;
 	padding: 0;
+}
+.button--pagination {
+	background: transparent;
+	border: 2px solid #555;
+	color: #555;
+	padding: 5px;
+	margin-right: 10px;
 }
 </style>

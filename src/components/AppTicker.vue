@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import AppButton from "./UI/AppButton.vue";
+import AppButton from "@/components/UI/AppButton.vue";
 import { normalizePrice } from "../utils/normalizePice";
 
 export default {

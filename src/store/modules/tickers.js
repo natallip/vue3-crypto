@@ -16,6 +16,9 @@ export const tickers = {
 		tickers(state) {
 			return state.tickers || [];
 		},
+		availableTickers(state) {
+			return state.availableTickers || [];
+		},
 	},
 	mutations: {
 		changeTickerName(state, name) {
@@ -58,10 +61,12 @@ export const tickers = {
 		},
 		async unsubscribeToUpdate({ commit }, tickerName) {
 			await unsubscribeToUpdate(tickerName);
+
 			commit("deleteTicker", tickerName);
 		},
 		async setSelectedTicker({ commit }, tickerName) {
 			commit("setSelectedTickerName", tickerName);
+
 			await subscribeToUpdate(tickerName, (newPrice) => {
 				commit("graph/updateGraph", newPrice, { root: true });
 			});

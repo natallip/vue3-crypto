@@ -17,7 +17,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
-import AppButton from "./UI/AppButton.vue";
+import AppButton from "@/components/UI/AppButton.vue";
 import { MIN_HEIGHT_GRAPH } from "../constants/index";
 
 export default {
@@ -46,7 +46,7 @@ export default {
 
 			return graph;
 		},
-	}
+	},
 };
 </script>
 

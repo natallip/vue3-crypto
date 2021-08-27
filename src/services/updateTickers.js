@@ -1,7 +1,5 @@
-import config from "../config.json";
+import { API_KEY, AGGREGATE_INDEX } from "../constants/index";
 
-const { API_KEY } = config;
-const AGGREGATE_INDEX = "5";
 const tickersHandlers = new Map();
 
 let socket = new WebSocket(`wss://streamer.cryptocompare.com/v2?api_key=${API_KEY}`);

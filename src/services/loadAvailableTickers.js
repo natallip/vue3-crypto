@@ -1,6 +1,5 @@
 import { axiosInstance } from "./index";
-import config from "../config.json";
-const { URL_COINS } = config;
+import { URL_COINS } from "../constants/index";
 
 export const loadAvailableTickers = async () => {
 	const {

@@ -14,17 +14,14 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
-import AppButton from "./UI/AppButton.vue";
-import AppInput from "./UI/AppInput.vue";
+import AppButton from "@/components/UI/AppButton.vue";
+import AppInput from "@/components/UI/AppInput.vue";
 import { normalizedTickerName } from "../utils/normalizeTickerName";
 
 export default {
 	components: {
 		AppButton,
 		AppInput,
-	},
-	async created() {
-		await this.loadAvailableTickers();
 	},
 	computed: {
 		...mapState("tickers", ["tickerName", "availableTickers"]),
@@ -36,9 +33,12 @@ export default {
 			return this.availableTickers?.find((t) => t === this.tickerName);
 		},
 	},
+	async created() {
+		await this.loadAvailableTickers();
+	},
 	methods: {
 		...mapMutations("tickers", ["addTicker", "updateTickers", "changeTickerName"]),
-		...mapActions("tickers", ["loadAvailableTickers", "subscribeToUpdate"]),
+		...mapActions("tickers", ["subscribeToUpdate", "loadAvailableTickers"]),
 		setTickerName(value) {
 			this.changeTickerName(normalizedTickerName(value));
 		},

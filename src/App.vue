@@ -1,36 +1,8 @@
 <template>
-	<svg-sprite />
-	<div class="container">
-		<add-ticker />
-		<hr v-if="isEmpty" />
-		<list-tickers />
-		<hr v-if="isEmpty" />
-		<graph-for-ticker v-if="selectedTickerName" />
-	</div>
+	<router-view />
 </template>
 
-<script>
-import { mapState, mapGetters } from "vuex";
-import AddTicker from "@/components/AddTicker";
-import ListTickers from "@/components/ListTickers.vue";
-import GraphForTicker from "@/components/GraphForTicker.vue";
-import SvgSprite from "./components/UI/SvgSprite.vue";
-export default {
-	components: {
-		AddTicker,
-		ListTickers,
-		GraphForTicker,
-		SvgSprite,
-	},
-	computed: {
-		...mapState("tickers", ["selectedTickerName"]),
-		...mapGetters("tickers", ["tickers"]),
-		isEmpty() {
-			return this.tickers.length;
-		},
-	},
-};
-</script>
+<script></script>
 
 <style>
 #app {
