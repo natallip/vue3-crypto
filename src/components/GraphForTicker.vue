@@ -1,6 +1,6 @@
 <template>
 	<div class="graph">
-		<h2 class="graph-name">{{ selectedTicker }} - USD</h2>
+		<h2 class="graph-name">{{ selectedTickerName }} - USD</h2>
 		<ul class="graph-list">
 			<li
 				v-for="(bar, ind) in normalizeGraph()"
@@ -18,43 +18,27 @@
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
 import AppButton from "./UI/AppButton.vue";
-import { MIN_HEIGHT_GRAPH, MAX_COLS_IN_GRAPH } from "../constants/index";
+import { MIN_HEIGHT_GRAPH } from "../constants/index";
 
 export default {
 	name: "GraphForTicker",
-	data() {
-		return {
-			graph: [],
-		};
-	},
 	components: { AppButton },
 	computed: {
-		...mapState("tickers", ["selectedTicker"]),
-		...mapGetters("tickers", ["tickers"]),
-		price() {
-			const selectedTicker = this.tickers.find((t) => t.name === this.selectedTicker);
-
-			return selectedTicker?.price;
-		},
-		// graphLength() {
-		// 	return true;
-		// },
+		...mapState("tickers", ["selectedTickerName"]),
+		...mapGetters("graph", ["limitedGraph"]),
 	},
 	methods: {
 		...mapMutations("tickers", ["setSelectedTicker"]),
+		...mapMutations("graph", ["clearGraph"]),
 		closeGraph() {
 			this.setSelectedTicker(null);
-			this.graph = [];
+			this.clearGraph();
 		},
 		normalizeGraph() {
-			const maxValue = Math.max(...this.graph);
-			const minValue = Math.min(...this.graph);
+			const maxValue = Math.max(...this.limitedGraph);
+			const minValue = Math.min(...this.limitedGraph);
 
-			if (this.graph.length > MAX_COLS_IN_GRAPH) {
-				this.graph.shift();
-			}
-
-			let graph = this.graph.map((item) => {
+			const graph = this.limitedGraph.map((item) => {
 				return (
 					MIN_HEIGHT_GRAPH + ((item - minValue) * (100 - MIN_HEIGHT_GRAPH)) / (maxValue - minValue)
 				);
@@ -62,15 +46,7 @@ export default {
 
 			return graph;
 		},
-	},
-	watch: {
-		selectedTicker() {
-			this.graph = [];
-		},
-		price(value) {
-			this.graph.push(value);
-		},
-	},
+	}
 };
 </script>
 

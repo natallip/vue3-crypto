@@ -5,7 +5,7 @@
 		<hr v-if="isEmpty" />
 		<list-tickers />
 		<hr v-if="isEmpty" />
-		<graph-for-ticker v-if="selectedTicker" />
+		<graph-for-ticker v-if="selectedTickerName" />
 	</div>
 </template>
 
@@ -15,7 +15,6 @@ import AddTicker from "@/components/AddTicker";
 import ListTickers from "@/components/ListTickers.vue";
 import GraphForTicker from "@/components/GraphForTicker.vue";
 import SvgSprite from "./components/UI/SvgSprite.vue";
-
 export default {
 	components: {
 		AddTicker,
@@ -24,7 +23,7 @@ export default {
 		SvgSprite,
 	},
 	computed: {
-		...mapState("tickers", ["selectedTicker"]),
+		...mapState("tickers", ["selectedTickerName"]),
 		...mapGetters("tickers", ["tickers"]),
 		isEmpty() {
 			return this.tickers.length;
