@@ -1,26 +1,41 @@
-import { loadInfoForTable } from "../../services/loadInfoForTable";
-import { COUNT_RECORDS_ON_PAGE } from "../../constants/index";
+import { loadInfoForTable } from "@/services/loadCoinsLast24hours";
+import { COUNT_RECORDS_ON_PAGE } from "@/constants/index";
+import { normalizeName } from "@/utils/normalizeName";
 
 export const table = {
 	namespaced: true,
 	state: {
 		tableRecords: [],
+		filter: {
+			type: null,
+			value: "",
+		},
 		activePage: 1,
+		options: ["name", "fullName"],
 	},
 	getters: {
-		tableColTitles(state) {
+		titles(state) {
 			if (state.tableRecords[0]) {
 				return Object.keys(state.tableRecords[0]);
 			}
 		},
-		recordsOnPage(state) {
+		filteredRecords(state) {
+			if (!state.filter.value) {
+				return state.tableRecords;
+			}
+
+			return [...state.tableRecords].filter((item) => {
+				return normalizeName(item[state.filter.type]).includes(normalizeName(state.filter.value));
+			});
+		},
+		records(state, getters) {
 			const start = (state.activePage - 1) * COUNT_RECORDS_ON_PAGE;
 			const end = state.activePage * COUNT_RECORDS_ON_PAGE;
 
-			return [...state.tableRecords].slice(start, end);
+			return getters.filteredRecords.slice(start, end);
 		},
-		hasNextPage(state) {
-			return state.tableRecords.length > state.activePage * COUNT_RECORDS_ON_PAGE;
+		pages(state, getters) {
+			return Math.ceil(getters.filteredRecords.length / COUNT_RECORDS_ON_PAGE);
 		},
 	},
 	mutations: {
@@ -29,6 +44,10 @@ export const table = {
 		},
 		changeActivePage(state, number) {
 			state.activePage = number;
+		},
+		changeFilter(state, obj) {
+			state.filter = obj;
+			state.activePage = 1;
 		},
 	},
 	actions: {

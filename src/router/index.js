@@ -13,7 +13,7 @@ const routes = [
 		component: () => import("../views/SelectTickers.vue"),
 	},
 	{
-		path: "/singleTicker",
+		path: "/singleTicker/:id",
 		name: "SingleTicker",
 		component: () => import("../views/SingleTicker.vue"),
 	},

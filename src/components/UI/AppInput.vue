@@ -7,6 +7,7 @@
 			:name="name"
 			:placeholder="placeholder"
 			:value="value"
+			:disabled="disabled"
 			@keyup="$emit('change', $event.target.value)"
 			@keyup.enter="$emit('enter')"
 		/>
@@ -20,6 +21,7 @@ export default {
 		placeholder: String,
 		value: String,
 		label: String,
+		disabled: Boolean,
 	},
 	emits: {
 		change: null,

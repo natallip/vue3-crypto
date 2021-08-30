@@ -4,30 +4,50 @@
 			v-if="activePage > 1"
 			type="pagination"
 			text="prev"
-			@click="changeActivePage(activePage - 1)"
+			@click="$emit('click', activePage - 1)"
+		/>
+		<app-button
+			v-for="page in pages"
+			type="pagination"
+			:key="page"
+			:text="page"
+			:class="{ 'button--active': isActive(page) }"
+			@click="$emit('click', page)"
 		/>
 		<app-button
 			v-if="hasNextPage"
 			type="pagination"
 			text="next"
-			@click="changeActivePage(activePage + 1)"
+			@click="$emit('click', activePage + 1)"
 		/>
 	</div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
 import AppButton from "./AppButton.vue";
 
 export default {
 	name: "Pagination",
 	components: { AppButton },
+	props: {
+		pages: Number,
+		activePage: Number,
+	},
+	emit: {
+		click: null,
+	},
 	computed: {
-		...mapState("table", ["activePage"]),
-		...mapGetters("table", ["hasNextPage"]),
+		hasNextPage() {
+			return this.activePage < this.pages;
+		},
+		// ...mapState("table", ["activePage"]),
+		// ...mapGetters("table", ["hasNextPage"]),
 	},
 	methods: {
-		...mapMutations("table", ["changeActivePage"]),
+		// ...mapMutations("table", ["changeActivePage"]),
+		isActive(page) {
+			return page === this.activePage;
+		},
 	},
 };
 </script>

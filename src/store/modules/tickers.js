@@ -1,5 +1,5 @@
-import { loadAvailableTickers } from "../../services/loadAvailableTickers";
-import { subscribeToUpdate, unsubscribeToUpdate } from "../../services/updateTickers";
+import { loadAvailableTickers } from "@/services/loadAvailableTickers";
+import { subscribeToUpdate, unsubscribeToUpdate } from "@/services/updateTickers";
 
 export const tickers = {
 	namespaced: true,

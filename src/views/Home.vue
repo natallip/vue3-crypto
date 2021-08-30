@@ -4,21 +4,36 @@
 			<router-link to="/selectTickers">select tickers</router-link>
 		</nav>
 		<h1>Top coins by their total volume across all markets in the last 24 hours</h1>
-		<app-table />
-		<app-pagination @click="changePage(page)" />
+		<table-with-filter-and-pagination
+			:options="options"
+			:titles="titles"
+			:records="records"
+			:pages="pages"
+			:activePage="activePage"
+			:value="filter.value"
+			@click="changeActivePage($event)"
+			@filter="changeFilter($event)"
+		/>
 	</div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-import AppTable from "@/components/AppTable.vue";
-import AppPagination from "@/components/UI/AppPagination.vue";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import TableWithFilterAndPagination from "@/components/table/TableWithFilterAndPagination.vue";
 
 export default {
 	name: "Home",
-	components: { AppTable, AppPagination },
+	components: { TableWithFilterAndPagination },
+	computed: {
+		...mapState("table", ["activePage", "tableRecords", "options", "filter"]),
+		...mapGetters("table", ["pages", "titles", "records", "filteredRecords"]),
+	},
+	async created() {
+		await this.loadInfoForTable();
+	},
 	methods: {
-		...mapMutations("table", ["changePage"]),
+		...mapMutations("table", ["changeActivePage", "changeFilter"]),
+		...mapActions("table", ["loadInfoForTable"]),
 	},
 };
 </script>

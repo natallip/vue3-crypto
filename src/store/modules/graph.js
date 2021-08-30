@@ -1,4 +1,4 @@
-import { MAX_COLS_IN_GRAPH } from "../../constants/index";
+import { MAX_COLS_IN_GRAPH } from "@/constants/index";
 
 export const graph = {
 	namespaced: true,

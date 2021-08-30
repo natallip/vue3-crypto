@@ -1,6 +1,4 @@
-<template>
-	single ticker
-</template>
+<template>single ticker</template>
 
 <script>
 export default {

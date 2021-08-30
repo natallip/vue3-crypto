@@ -16,7 +16,7 @@
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import AppButton from "@/components/UI/AppButton.vue";
 import AppInput from "@/components/UI/AppInput.vue";
-import { normalizedTickerName } from "../utils/normalizeTickerName";
+import { normalizeName } from "@/utils/normalizeName";
 
 export default {
 	components: {
@@ -40,7 +40,7 @@ export default {
 		...mapMutations("tickers", ["addTicker", "updateTickers", "changeTickerName"]),
 		...mapActions("tickers", ["subscribeToUpdate", "loadAvailableTickers"]),
 		setTickerName(value) {
-			this.changeTickerName(normalizedTickerName(value));
+			this.changeTickerName(normalizeName(value));
 		},
 		async add() {
 			if (!this.tickerName || this.isTickerExist || !this.isAvailable) {

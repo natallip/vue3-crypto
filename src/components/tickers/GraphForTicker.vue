@@ -18,7 +18,7 @@
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
 import AppButton from "@/components/UI/AppButton.vue";
-import { MIN_HEIGHT_GRAPH } from "../constants/index";
+import { MIN_HEIGHT_GRAPH } from "@/constants/index";
 
 export default {
 	name: "GraphForTicker",

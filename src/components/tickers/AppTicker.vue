@@ -1,7 +1,7 @@
 <template>
 	<div class="ticker">
 		<h2 class="ticker__title">{{ ticker.name }} - USD</h2>
-		<div class="ticker__price">{{ normalizePrice(ticker.price) }}</div>
+		<div class="ticker__price">{{ price }}</div>
 		<div class="ticker__delete">
 			<app-button type="warn" icon="delete" text="Удалить" @click="$emit('delete', ticker.name)" />
 		</div>
@@ -10,7 +10,7 @@
 
 <script>
 import AppButton from "@/components/UI/AppButton.vue";
-import { normalizePrice } from "../utils/normalizePice";
+import { normalizePrice } from "@/utils/normalizePice";
 
 export default {
 	components: { AppButton },
@@ -20,9 +20,9 @@ export default {
 	emits: {
 		delete: null,
 	},
-	methods: {
-		normalizePrice(price) {
-			return normalizePrice(price);
+	computed: {
+		price() {
+			return normalizePrice(this.ticker.price);
 		},
 	},
 };

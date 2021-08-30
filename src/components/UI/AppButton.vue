@@ -12,7 +12,7 @@ export default {
 	props: {
 		type: String,
 		icon: String,
-		text: String,
+		text: [String, Number],
 	},
 	components: {
 		AppIcon,
@@ -35,11 +35,13 @@ export default {
 .button {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	cursor: pointer;
 	border: none;
 	background: transparent;
 	outline: transparent;
 	padding: 0;
+	min-width: 30px;
 }
 .button--primary {
 	background: #555;
@@ -65,5 +67,9 @@ export default {
 	color: #555;
 	padding: 5px;
 	margin-right: 10px;
+}
+.button--active {
+	background: #4e0281;
+	color: #fff;
 }
 </style>

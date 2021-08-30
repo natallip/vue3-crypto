@@ -14,9 +14,9 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import AddTicker from "@/components/AddTicker";
-import ListTickers from "@/components/ListTickers.vue";
-import GraphForTicker from "@/components/GraphForTicker.vue";
+import AddTicker from "@/components/tickers/AddTicker";
+import ListTickers from "@/components/tickers/ListTickers.vue";
+import GraphForTicker from "@/components/tickers/GraphForTicker.vue";
 import SvgSprite from "@/components/UI/SvgSprite.vue";
 export default {
 	name: "SelectTickers.vue",

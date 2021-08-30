@@ -10,5 +10,6 @@ export const loadAvailableTickers = async () => {
 			summary: true,
 		},
 	});
+
 	return Object.keys(Data) || [];
 };
