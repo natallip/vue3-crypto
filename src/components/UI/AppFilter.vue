@@ -1,7 +1,7 @@
 <template>
 	<div class="filter">
 		<div class="filter__title">Фильтровать:</div>
-		<app-select :options="options" @change="changeType($event)" />
+		<app-select :options="options" text="Select type" @change="changeType($event)" />
 		<app-input
 			name="filter"
 			placeholder="Искать"
@@ -17,8 +17,6 @@ import AppInput from "./AppInput.vue";
 import AppSelect from "./AppSelect.vue";
 
 export default {
-	components: { AppSelect, AppInput },
-	name: "AppFilter",
 	data() {
 		return {
 			filterObj: {
@@ -27,6 +25,7 @@ export default {
 			},
 		};
 	},
+	components: { AppSelect, AppInput },
 	props: {
 		options: Array,
 		value: [String, Number],

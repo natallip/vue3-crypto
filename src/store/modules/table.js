@@ -1,5 +1,4 @@
 import { loadInfoForTable } from "@/services/loadCoinsLast24hours";
-import { COUNT_RECORDS_ON_PAGE } from "@/constants/index";
 import { normalizeName } from "@/utils/normalizeName";
 
 export const table = {
@@ -10,6 +9,7 @@ export const table = {
 			type: null,
 			value: "",
 		},
+		count: 10,
 		activePage: 1,
 		options: ["name", "fullName"],
 	},
@@ -29,13 +29,17 @@ export const table = {
 			});
 		},
 		records(state, getters) {
-			const start = (state.activePage - 1) * COUNT_RECORDS_ON_PAGE;
-			const end = state.activePage * COUNT_RECORDS_ON_PAGE;
+			if (state.count === "all") {
+				return getters.filteredRecords;
+			}
+
+			const start = (state.activePage - 1) * +state.count;
+			const end = state.activePage * +state.count;
 
 			return getters.filteredRecords.slice(start, end);
 		},
 		pages(state, getters) {
-			return Math.ceil(getters.filteredRecords.length / COUNT_RECORDS_ON_PAGE);
+			return Math.ceil(getters.filteredRecords.length / state.count);
 		},
 	},
 	mutations: {
@@ -47,6 +51,10 @@ export const table = {
 		},
 		changeFilter(state, obj) {
 			state.filter = obj;
+			state.activePage = 1;
+		},
+		changeCountOnPage(state, value) {
+			state.count = value;
 			state.activePage = 1;
 		},
 	},

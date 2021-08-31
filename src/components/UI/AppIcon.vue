@@ -8,7 +8,6 @@
 
 <script>
 export default {
-	name: "AppIcon",
 	props: {
 		id: String,
 	},

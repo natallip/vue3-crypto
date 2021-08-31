@@ -21,7 +21,6 @@ import AppButton from "@/components/UI/AppButton.vue";
 import { MIN_HEIGHT_GRAPH } from "@/constants/index";
 
 export default {
-	name: "GraphForTicker",
 	components: { AppButton },
 	computed: {
 		...mapState("tickers", ["selectedTickerName"]),

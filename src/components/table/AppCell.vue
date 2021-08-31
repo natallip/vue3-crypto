@@ -10,9 +10,7 @@
 </template>
 
 <script>
-
 export default {
-	name: "AppCell",
 	props: {
 		type: String,
 		text: String,

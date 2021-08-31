@@ -54,11 +54,7 @@
 	</svg>
 </template>
 
-<script>
-export default {
-	name: "SvgSprite",
-};
-</script>
+<script></script>
 <style>
 .svg-sprite {
 	width: 0;

@@ -8,7 +8,6 @@
 <script>
 import AppIcon from "./AppIcon.vue";
 export default {
-	name: "AppButton",
 	props: {
 		type: String,
 		icon: String,

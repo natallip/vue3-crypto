@@ -1,5 +1,5 @@
 import { axiosInstance } from "./index";
-import { URL_COINS } from "../constants/index";
+import { URL_COINS } from "@/constants/index";
 
 export const loadAvailableTickers = async () => {
 	const {

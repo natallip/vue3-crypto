@@ -27,24 +27,20 @@
 import AppButton from "./AppButton.vue";
 
 export default {
-	name: "Pagination",
 	components: { AppButton },
 	props: {
 		pages: Number,
 		activePage: Number,
 	},
-	emit: {
+	emits: {
 		click: null,
 	},
 	computed: {
 		hasNextPage() {
 			return this.activePage < this.pages;
 		},
-		// ...mapState("table", ["activePage"]),
-		// ...mapGetters("table", ["hasNextPage"]),
 	},
 	methods: {
-		// ...mapMutations("table", ["changeActivePage"]),
 		isActive(page) {
 			return page === this.activePage;
 		},
@@ -54,7 +50,7 @@ export default {
 
 <style>
 .pagination {
-	margin: 50px 0;
+	margin: 30px 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;

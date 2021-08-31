@@ -13,6 +13,7 @@
 			:value="filter.value"
 			@click="changeActivePage($event)"
 			@filter="changeFilter($event)"
+			@change="changeCountOnPage($event.target.value)"
 		/>
 	</div>
 </template>
@@ -32,7 +33,7 @@ export default {
 		await this.loadInfoForTable();
 	},
 	methods: {
-		...mapMutations("table", ["changeActivePage", "changeFilter"]),
+		...mapMutations("table", ["changeActivePage", "changeFilter", "changeCountOnPage"]),
 		...mapActions("table", ["loadInfoForTable"]),
 	},
 };
@@ -40,6 +41,6 @@ export default {
 
 <style scoped>
 h1 {
-	margin: 50px 0;
+	margin: 30px 0;
 }
 </style>

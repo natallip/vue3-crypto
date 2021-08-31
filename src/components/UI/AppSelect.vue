@@ -1,6 +1,6 @@
 <template>
-	<select v-model="selected" @change="$emit('change', this.selected)">
-		<option disabled value="">Select type</option>
+	<select v-model="selectedValue" @change="$emit('change', $event.target.value)">
+		<option disabled value="">{{ text }}</option>
 		<option v-for="item in options" :value="item" :key="item">
 			{{ item }}
 		</option>
@@ -9,16 +9,16 @@
 
 <script>
 export default {
-	name: "AppButton",
 	data() {
 		return {
 			data: {
-				selected: "",
+				selectedValue: "",
 			},
 		};
 	},
 	props: {
 		options: Array,
+		text: String,
 	},
 	emits: {
 		change: null,

@@ -26,7 +26,6 @@
 import AppCell from "./AppCell.vue";
 
 export default {
-	name: "Table",
 	components: { AppCell },
 	props: {
 		titles: Array,
@@ -38,7 +37,7 @@ export default {
 <style>
 table {
 	border-collapse: collapse;
-	margin: 50px auto;
+	margin: 30px auto;
 }
 tr:nth-child(2n) {
 	background: #e9e9e9;
