@@ -39,6 +39,7 @@ export default {
 		},
 		async setSelected(tickerName) {
 			await this.setSelectedTicker(tickerName);
+
 			this.clearGraph();
 		},
 	},

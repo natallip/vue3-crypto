@@ -1,6 +1,6 @@
 <template>
 	<div class="toggle-count">
-		<span>Выводить записей на странице:</span>
+		<span>Records on page:</span>
 		<template v-for="item in options" :key="item">
 			<label :for="countName(item)" :class="{ active: isChecked(item) }">{{ item }}</label>
 			<input

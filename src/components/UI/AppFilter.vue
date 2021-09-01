@@ -1,10 +1,10 @@
 <template>
 	<div class="filter">
-		<div class="filter__title">Фильтровать:</div>
+		<div class="filter__title">Filter:</div>
 		<app-select :options="options" text="Select type" @change="changeType($event)" />
 		<app-input
 			name="filter"
-			placeholder="Искать"
+			placeholder="Find"
 			:value="value"
 			:disabled="!isSelectOption"
 			@change="filter($event)"

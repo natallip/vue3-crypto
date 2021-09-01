@@ -2,13 +2,13 @@
 	<div class="addTicker">
 		<app-input
 			name="ticker"
-			placeholder="Например DOGE"
+			placeholder="DOGE"
 			label="Тикер"
 			:value="tickerName"
 			@change="setTickerName"
 			@enter="add"
 		/>
-		<app-button type="primary" icon="add" text="Добавить" @click="add" />
+		<app-button type="primary" icon="add" text="Add" @click="add" />
 	</div>
 </template>
 
