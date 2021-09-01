@@ -32,8 +32,8 @@ export const graph = {
 		addTickerInGraph(state, tickerName) {
 			state.series = [...state.series, { name: tickerName, data: [] }];
 		},
-		updateGraph(state, [tickerName, newPrice]) {
-			state.series = state.series.map((t) => {
+		updateSeries(state, [tickerName, newPrice]) {
+			state.series.map((t) => {
 				if (t?.name === tickerName) {
 					t.data = [...t.data, newPrice];
 
@@ -44,13 +44,20 @@ export const graph = {
 		updateXaxis(state) {
 			state.xaxis = [...state.xaxis, moment().format("hh:mm")];
 		},
+		removeSeries(state, tickerName) {
+			state.series = state.series.filter((s) => s.name !== tickerName);
+		},
+		clearGraph(state) {
+			state.series = [];
+			state.xaxis = [];
+		},
 	},
 	actions: {
 		async setSeries({ commit }, tickerName) {
 			commit("addTickerInGraph", tickerName);
 
 			await subscribeToUpdate(tickerName, (newPrice) => {
-				commit("updateGraph", [tickerName, newPrice]);
+				commit("updateSeries", [tickerName, newPrice]);
 				commit("updateXaxis");
 			});
 		},

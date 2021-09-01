@@ -7,7 +7,8 @@ export const tickers = {
 		tickerName: "",
 		tickers: [],
 		availableTickers: [],
-		selectedTickerName: "",
+		//selectedTickerName: "",
+		selectedTickers: [],
 	},
 	getters: {
 		tickersNames(state) {
@@ -41,8 +42,11 @@ export const tickers = {
 				state.tickers[ind].price = data[1];
 			}
 		},
-		setSelectedTickerName(state, tickerName) {
-			state.selectedTickerName = tickerName;
+		// setSelectedTickerName(state, tickerName) {
+		// 	state.selectedTickerName = tickerName;
+		// },
+		setSelectedTickers(state, tickerName) {
+			state.selectedTickers = [...state.selectedTickers, tickerName];
 		},
 		setAvailableTickers(state, tickers) {
 			state.availableTickers = tickers;
@@ -64,12 +68,12 @@ export const tickers = {
 
 			commit("deleteTicker", tickerName);
 		},
-		async setSelectedTicker({ commit }, tickerName) {
-			commit("setSelectedTickerName", tickerName);
+		// async setSelectedTickers({ commit }, tickerName) {
+		// 	commit("setSelectedTickers", tickerName);
 
-			await subscribeToUpdate(tickerName, (newPrice) => {
-				commit("graph/updateGraph", newPrice, { root: true });
-			});
-		},
+		// 	await subscribeToUpdate(tickerName, (newPrice) => {
+		// 		commit("graph/updateGraph", newPrice, { root: true });
+		// 	});
+		// },
 	},
 };

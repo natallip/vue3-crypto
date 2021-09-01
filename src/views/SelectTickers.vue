@@ -8,30 +8,39 @@
 		<hr v-if="isEmpty" />
 		<list-tickers />
 		<hr v-if="isEmpty" />
-		<graph-for-ticker v-if="selectedTickerName" />
+		<app-graph v-if="isSelected" :series="limitedSeries" :xaxis="limitedXaxis" />
 	</div>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import AddTicker from "@/components/tickers/AddTicker";
 import ListTickers from "@/components/tickers/ListTickers.vue";
-import GraphForTicker from "@/components/tickers/GraphForTicker.vue";
+import AppGraph from "@/components/UI/AppGraph.vue";
 import SvgSprite from "@/components/UI/SvgSprite.vue";
+
 export default {
-	name: "SelectTickers.vue",
 	components: {
 		AddTicker,
 		ListTickers,
-		GraphForTicker,
+		AppGraph,
 		SvgSprite,
 	},
 	computed: {
-		...mapState("tickers", ["selectedTickerName"]),
+		...mapGetters("graph", ["limitedSeries", "limitedXaxis"]),
 		...mapGetters("tickers", ["tickers"]),
 		isEmpty() {
 			return this.tickers.length;
 		},
+		isSelected() {
+			return this.limitedSeries.length;
+		},
+	},
+	methods: {
+		...mapMutations("graph", ["clearGraph"]),
+	},
+	unmounted() {
+		this.clearGraph();
 	},
 };
 </script>

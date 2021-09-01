@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<apexchart width="100%" height="500" type="area" :options="chartOptions" :series="series" />
+		<apexchart width="1000" height="500" type="area" :options="chartOptions" :series="series" />
 	</div>
 </template>
 
@@ -32,15 +32,11 @@ export default {
 						enabled: false,
 					},
 				},
-				fill: {
-					colors: ["#000000"],
-				},
 				dataLabels: {
 					enabled: false,
 				},
 				stroke: {
 					curve: "smooth",
-					colors: ["#000000"],
 				},
 				title: {
 					text: "Dynamic Updating Chart",

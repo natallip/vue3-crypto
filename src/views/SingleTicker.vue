@@ -1,14 +1,14 @@
 <template>
 	<h1>{{ tickerName }}</h1>
-	<graph :series="limitedSeries" :xaxis="limitedXaxis" />
+	<app-graph :series="limitedSeries" :xaxis="limitedXaxis" />
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Graph from "../components/tickers/Graph.vue";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import AppGraph from "@/components/UI/AppGraph.vue";
 
 export default {
-	components: { Graph },
+	components: { AppGraph },
 	computed: {
 		...mapGetters("graph", ["limitedSeries", "limitedXaxis"]),
 		tickerName() {
@@ -19,7 +19,11 @@ export default {
 		this.setSeries(this.tickerName);
 	},
 	methods: {
+		...mapMutations("graph", ["clearGraph"]),
 		...mapActions("graph", ["setSeries"]),
+	},
+	unmounted() {
+		this.clearGraph();
 	},
 };
 </script>

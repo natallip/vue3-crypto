@@ -5,7 +5,7 @@
 			class="tickers__item"
 			:key="ticker"
 			:class="{ active: isSelected(ticker.name) }"
-			@click="setSelected(ticker.name)"
+			@click="setSeries(ticker.name)"
 		>
 			<app-ticker :ticker="ticker" @delete="remove" />
 		</li>
@@ -13,33 +13,30 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import AppTicker from "./AppTicker.vue";
 
 export default {
 	components: { AppTicker },
 	computed: {
-		...mapState("tickers", ["selectedTickerName"]),
 		...mapGetters("tickers", ["tickers"]),
+		...mapGetters("graph", ["limitedSeries"]),
 	},
 	methods: {
 		...mapMutations("tickers", ["deleteTicker"]),
-		...mapMutations("graph", ["clearGraph"]),
-		...mapActions("tickers", ["setSelectedTicker"]),
-		remove(name) {
-			if (name === this.selectedTickerName) {
-				this.setSelectedTicker(null);
-				this.clearGraph();
-			}
+		...mapMutations("graph", ["removeSeries", "clearGraph"]),
+		...mapActions("graph", ["setSeries"]),
+		remove(tickerName) {
+			this.removeSeries(tickerName);
 
-			this.deleteTicker(name);
+			this.deleteTicker(tickerName);
 		},
 		isSelected(tickerName) {
-			return this.selectedTickerName === tickerName;
+			return this.limitedSeries.find((t) => {
+				return t.name === tickerName;
+			});
 		},
-		async setSelected(tickerName) {
-			await this.setSelectedTicker(tickerName);
-
+		unmounted() {
 			this.clearGraph();
 		},
 	},
