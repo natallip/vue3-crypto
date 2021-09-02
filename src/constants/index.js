@@ -1,4 +1,5 @@
 export const MIN_HEIGHT_GRAPH = 5;
+export const MIN_COLS_IN_GRAPH = 1;
 export const MAX_COLS_IN_GRAPH = 7;
 export const DEFAULT_CURRENCY = "USD";
 export const LIMIT_COUNT_FOR_REQUEST = 50;

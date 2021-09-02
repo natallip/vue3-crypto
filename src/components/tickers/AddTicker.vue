@@ -4,6 +4,7 @@
 			name="ticker"
 			placeholder="DOGE"
 			label="Тикер"
+			type="text"
 			:value="tickerName"
 			@change="setTickerName"
 			@enter="add"
@@ -19,10 +20,7 @@ import AppInput from "@/components/UI/AppInput.vue";
 import { normalizeName } from "@/utils/normalizeName";
 
 export default {
-	components: {
-		AppButton,
-		AppInput,
-	},
+	components: { AppButton, AppInput },
 	computed: {
 		...mapState("tickers", ["tickerName", "availableTickers"]),
 		...mapGetters("tickers", ["tickersNames", "tickers"]),
@@ -63,7 +61,7 @@ export default {
 
 <style scoped>
 .addTicker {
-	margin-top: 50px;
+	margin-top: 30px;
 	text-align: left;
 	margin-bottom: 2px;
 }

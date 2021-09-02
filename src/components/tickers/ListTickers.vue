@@ -49,7 +49,7 @@ export default {
 	display: flex;
 	flex-wrap: wrap;
 	margin-left: -20px;
-	margin-top: 40px;
+	margin-top: 30px;
 	padding: 0;
 }
 .tickers__item {
@@ -58,7 +58,7 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	margin-left: 20px;
-	margin-bottom: 40px;
+	margin-bottom: 30px;
 	text-align: center;
 	border-radius: 5px;
 	cursor: pointer;

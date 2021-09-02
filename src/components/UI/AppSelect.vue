@@ -19,9 +19,13 @@ export default {
 	props: {
 		options: Array,
 		text: String,
+		default: String,
 	},
 	emits: {
 		change: null,
+	},
+	created() {
+		this.selectedValue = this.default;
 	},
 };
 </script>

@@ -3,6 +3,7 @@
 		<div class="filter__title">Filter:</div>
 		<app-select :options="options" text="Select type" @change="changeType($event)" />
 		<app-input
+			type="text"
 			name="filter"
 			placeholder="Find"
 			:value="value"

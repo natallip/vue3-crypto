@@ -1,53 +1,31 @@
 <template>
-	<div>
-		<apexchart width="1000" height="500" type="area" :options="chartOptions" :series="series" />
+	<div class="chart">
+		<apexchart
+			ref="chart"
+			width="100%"
+			height="450"
+			:type="type"
+			:options="options"
+			:series="limitedSeries"
+		/>
 	</div>
 </template>
 
 <script>
+import { mapState, mapMutations, mapGetters } from "vuex";
 import VueApexCharts from "vue3-apexcharts";
 
 export default {
 	components: { apexchart: VueApexCharts },
-	props: {
-		series: Array,
-		xaxis: Array,
+	computed: {
+		...mapState("graph", ["type"]),
+		...mapGetters("graph", ["options", "limitedSeries"]),
 	},
-	data() {
-		return {
-			chartOptions: {
-				chart: {
-					id: "realtime",
-					animations: {
-						enabled: true,
-						easing: "linear",
-						dynamicAnimation: {
-							speed: 1000,
-						},
-					},
-					toolbar: {
-						show: false,
-					},
-					zoom: {
-						enabled: false,
-					},
-				},
-				dataLabels: {
-					enabled: false,
-				},
-				stroke: {
-					curve: "smooth",
-				},
-				title: {
-					text: "Dynamic Updating Chart",
-					align: "center",
-				},
-				xaxis: {
-					type: "category",
-					categories: this.xaxis,
-				},
-			},
-		};
+	methods: {
+		...mapMutations("graph", ["clearGraph"]),
+	},
+	unmounted() {
+		this.clearGraph();
 	},
 };
 </script>

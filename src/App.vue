@@ -18,6 +18,6 @@
 	margin: 0 auto;
 }
 hr {
-	margin: 20px 0;
+	margin: 10px 0;
 }
 </style>

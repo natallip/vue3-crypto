@@ -2,13 +2,14 @@
 	<div class="input-box">
 		<label :for="name">{{ label }}</label>
 		<input
-			type="text"
+			:type="type"
 			:id="name"
 			:name="name"
 			:placeholder="placeholder"
 			:value="value"
 			:disabled="disabled"
 			@keyup="$emit('change', $event.target.value)"
+			@change="$emit('change', $event.target.value)"
 			@keyup.enter="$emit('enter')"
 		/>
 	</div>
@@ -17,6 +18,7 @@
 <script>
 export default {
 	props: {
+		type: String,
 		name: String,
 		placeholder: String,
 		value: String,
@@ -40,7 +42,7 @@ export default {
 label {
 	margin-bottom: 10px;
 }
-input {
+input[type="text"] {
 	padding: 5px;
 	border: none;
 	border-bottom: 2px solid #555;

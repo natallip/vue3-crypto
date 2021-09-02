@@ -1,16 +1,17 @@
 <template>
-	<h1>{{ tickerName }}</h1>
-	<app-graph :series="limitedSeries" :xaxis="limitedXaxis" />
+	<div class="container">
+		<h1>{{ tickerName }}</h1>
+		<graph-with-opions />
+	</div>
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
-import AppGraph from "@/components/UI/AppGraph.vue";
+import { mapActions, mapMutations } from "vuex";
+import GraphWithOpions from "@/components/graph/GraphWithOpions";
 
 export default {
-	components: { AppGraph },
+	components: { GraphWithOpions },
 	computed: {
-		...mapGetters("graph", ["limitedSeries", "limitedXaxis"]),
 		tickerName() {
 			return this.$route.params.id;
 		},
