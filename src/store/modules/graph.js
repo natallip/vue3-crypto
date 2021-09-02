@@ -1,6 +1,5 @@
 import { subscribeToUpdate } from "@/services/updateTickers";
-import { MIN_COLS_IN_GRAPH, MAX_COLS_IN_GRAPH } from "@/constants/index";
-import moment from "moment";
+import { MAX_COLS_IN_GRAPH } from "@/constants/index";
 
 export const graph = {
 	namespaced: true,
@@ -8,7 +7,6 @@ export const graph = {
 		type: "area",
 		colors: undefined,
 		series: [],
-		xaxis: [],
 		options: {
 			chart: {
 				id: "realtime",
@@ -37,10 +35,7 @@ export const graph = {
 				align: "center",
 			},
 			xaxis: {
-				type: "category",
-				categories: [],
-				min: MIN_COLS_IN_GRAPH,
-				max: MAX_COLS_IN_GRAPH,
+				type: "datetime",
 			},
 		},
 	},
@@ -56,27 +51,11 @@ export const graph = {
 				}) || []
 			);
 		},
-		limitedXaxis(state) {
-			let limited = [...state.xaxis];
-
-			if (state.xaxis?.length > MAX_COLS_IN_GRAPH) {
-				limited = limited.slice(-MAX_COLS_IN_GRAPH);
-			}
-			return limited || [];
-		},
-		options(state, getters) {
+		options(state) {
 			state.options.colors = state.colors;
 
 			return {
 				...state.options,
-				...{
-					xaxis: {
-						type: "category",
-						categories: [...getters.limitedXaxis],
-						min: MIN_COLS_IN_GRAPH,
-						max: MAX_COLS_IN_GRAPH,
-					},
-				},
 			};
 		},
 	},
@@ -88,26 +67,22 @@ export const graph = {
 			state.colors = [color];
 		},
 		addTickerInGraph(state, tickerName) {
-			state.series = [...state.series, { name: tickerName, data: [] }];
+			state.series = [...state.series, { name: tickerName, data: [[new Date(), 0]] }];
 		},
 		updateSeries(state, [tickerName, newPrice]) {
 			state.series.map((t) => {
 				if (t?.name === tickerName) {
-					t.data = [...t.data, newPrice];
+					t.data = [...t.data, [new Date(), newPrice]];
 
 					return t;
 				}
 			});
-		},
-		updateXaxis(state) {
-			state.xaxis = [...state.xaxis, moment().format("hh:mm:ss")];
 		},
 		removeSeries(state, tickerName) {
 			state.series = state.series.filter((s) => s.name !== tickerName);
 		},
 		clearGraph(state) {
 			state.series = [];
-			state.xaxis = [];
 			state.colors = undefined;
 			state.type = "area";
 		},
@@ -118,7 +93,6 @@ export const graph = {
 
 			await subscribeToUpdate(tickerName, (newPrice) => {
 				commit("updateSeries", [tickerName, newPrice]);
-				commit("updateXaxis");
 			});
 		},
 	},

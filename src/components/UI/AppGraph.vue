@@ -1,13 +1,6 @@
 <template>
 	<div class="chart">
-		<apexchart
-			ref="chart"
-			width="100%"
-			height="450"
-			:type="type"
-			:options="options"
-			:series="limitedSeries"
-		/>
+		<apexchart width="100%" height="450" :type="type" :options="options" :series="limitedSeries" />
 	</div>
 </template>
 
