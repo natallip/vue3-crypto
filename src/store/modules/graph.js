@@ -89,15 +89,6 @@ export const graph = {
 		},
 		addTickerInGraph(state, tickerName) {
 			state.series = [...state.series, { name: tickerName, data: [] }];
-			// if (state.series[0]?.data.length > 1) {
-			// 	state.series = [
-			// 		...state.series,
-			// 		{ name: tickerName, data: new Array(state.series[0].data.length) },
-			// 	];
-			// 	return;
-			// } else {
-			// 	state.series = [...state.series, { name: tickerName, data: [] }];
-			// }
 		},
 		updateSeries(state, [tickerName, newPrice]) {
 			state.series.map((t) => {
