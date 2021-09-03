@@ -4,7 +4,7 @@
 
 Посмотреть результат можно здесь:  [result](https://natallip.github.io/vue3-crypto/)
 
-Стэк технологий: Vue.js, Vuex, axios, WebSocket. 
+Стэк технологий: Vue.js, Vuex, axios, WebSocket, apex-charts 
 
 Тикеры можно добавлять, удалять, при нажатии на определенный тикер будет отображаться график в режиме реального времени.
 
