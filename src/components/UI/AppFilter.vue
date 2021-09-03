@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import AppInput from "./AppInput.vue";
-import AppSelect from "./AppSelect.vue";
+import AppInput from "@/components/UI/AppInput.vue";
+import AppSelect from "@/components/UI/AppSelect.vue";
 
 export default {
 	data() {
@@ -62,6 +62,7 @@ export default {
 	margin: 20px auto;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 .filter__title {
 	margin-right: 10px;

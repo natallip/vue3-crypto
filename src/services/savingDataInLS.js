@@ -4,7 +4,6 @@ export const setInLocalStorage = (tickersNames) => {
 
 export const getFromLocalStorage = () => {
 	const tickersData = window.localStorage.getItem("crypto-tickers");
-	//let tickers = [];
 
 	if (tickersData !== "undefined") {
 		return JSON.parse(tickersData).map((t) => {
@@ -12,8 +11,6 @@ export const getFromLocalStorage = () => {
 				name: t,
 				price: "-",
 			};
-
-			//this.addTicker(newTicker);
 		});
 	}
 

@@ -37,7 +37,7 @@ export default {
 <style>
 table {
 	border-collapse: collapse;
-	margin: 30px auto;
+	margin: 20px auto;
 }
 tr:nth-child(2n) {
 	background: #e9e9e9;

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AppIcon from "./AppIcon.vue";
+import AppIcon from "@/components/UI/AppIcon.vue";
 export default {
 	props: {
 		type: String,

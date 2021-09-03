@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import AppButton from "./AppButton.vue";
+import AppButton from "@/components/UI/AppButton.vue";
 
 export default {
 	components: { AppButton },

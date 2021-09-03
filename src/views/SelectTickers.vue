@@ -1,9 +1,7 @@
 <template>
 	<svg-sprite />
+	<app-nav />
 	<div class="container">
-		<nav>
-			<router-link to="/">top coins</router-link>
-		</nav>
 		<add-ticker />
 		<hr v-if="isEmpty" />
 		<list-tickers />
@@ -18,6 +16,7 @@ import AddTicker from "@/components/tickers/AddTicker";
 import ListTickers from "@/components/tickers/ListTickers.vue";
 import AppGraph from "@/components/UI/AppGraph.vue";
 import SvgSprite from "@/components/UI/SvgSprite.vue";
+import AppNav from "@/components/UI/AppNav.vue";
 import { getFromLocalStorage } from "@/services/savingDataInLS";
 
 export default {
@@ -26,6 +25,7 @@ export default {
 		ListTickers,
 		AppGraph,
 		SvgSprite,
+		AppNav,
 	},
 	computed: {
 		...mapGetters("tickers", ["tickers"]),
@@ -42,6 +42,7 @@ export default {
 
 		savingTickers.forEach(async (t) => {
 			this.addTicker(t);
+
 			await this.subscribeToUpdate(t.name);
 		});
 	},

@@ -1,8 +1,6 @@
 <template>
+	<app-nav />
 	<div class="container">
-		<nav>
-			<router-link to="/selectTickers">select tickers</router-link>
-		</nav>
 		<h1>Top coins by their total volume across all markets in the last 24 hours</h1>
 		<app-loader v-if="isLoading" />
 		<table-with-filter-and-pagination
@@ -23,10 +21,11 @@
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import TableWithFilterAndPagination from "@/components/table/TableWithFilterAndPagination.vue";
 import AppLoader from "@/components/UI/AppLoader.vue";
+import AppNav from "@/components/UI/AppNav.vue";
 
 export default {
 	name: "Home",
-	components: { TableWithFilterAndPagination, AppLoader },
+	components: { TableWithFilterAndPagination, AppLoader, AppNav },
 	computed: {
 		...mapState("table", ["activePage", "tableRecords", "options", "filter"]),
 		...mapGetters("table", ["pages", "titles", "records", "filteredRecords"]),
