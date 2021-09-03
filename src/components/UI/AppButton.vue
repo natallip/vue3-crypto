@@ -48,6 +48,12 @@ export default {
 	padding: 5px;
 	border-radius: 18px;
 }
+.button--success {
+	background: #00694a;
+	color: #fff;
+	padding: 5px;
+	border-radius: 18px;
+}
 .button--warn {
 	background: #9c0707;
 	border-radius: 18px;

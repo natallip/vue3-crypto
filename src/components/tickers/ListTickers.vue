@@ -15,11 +15,12 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import AppTicker from "./AppTicker.vue";
+import { setInLocalStorage } from "@/services/savingDataInLS";
 
 export default {
 	components: { AppTicker },
 	computed: {
-		...mapGetters("tickers", ["tickers"]),
+		...mapGetters("tickers", ["tickers", "tickersNames"]),
 		...mapGetters("graph", ["limitedSeries"]),
 	},
 	methods: {
@@ -30,6 +31,8 @@ export default {
 			this.removeSeries(tickerName);
 
 			this.deleteTicker(tickerName);
+
+			setInLocalStorage(this.tickersNames);
 		},
 		isSelected(tickerName) {
 			return this.limitedSeries.find((t) => {

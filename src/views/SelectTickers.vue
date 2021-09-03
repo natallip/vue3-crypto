@@ -13,11 +13,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import AddTicker from "@/components/tickers/AddTicker";
 import ListTickers from "@/components/tickers/ListTickers.vue";
 import AppGraph from "@/components/UI/AppGraph.vue";
 import SvgSprite from "@/components/UI/SvgSprite.vue";
+import { getFromLocalStorage } from "@/services/savingDataInLS";
 
 export default {
 	components: {
@@ -35,6 +36,23 @@ export default {
 		isSelected() {
 			return this.limitedSeries.length;
 		},
+	},
+	created() {
+		let savingTickers = getFromLocalStorage();
+
+		savingTickers.forEach(async (t) => {
+			this.addTicker(t);
+			await this.subscribeToUpdate(t.name);
+		});
+	},
+	methods: {
+		...mapMutations("tickers", [
+			"addTicker",
+			"updateTickers",
+			"changeTickerName",
+			"setPossibleTickers",
+		]),
+		...mapActions("tickers", ["subscribeToUpdate", "loadAvailableTickers"]),
 	},
 };
 </script>

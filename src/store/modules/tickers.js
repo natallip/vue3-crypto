@@ -1,5 +1,6 @@
 import { loadAvailableTickers } from "@/services/loadAvailableTickers";
 import { subscribeToUpdate, unsubscribeToUpdate } from "@/services/updateTickers";
+import { MAX_POSSIBLE_TICKERS } from "@/constants";
 
 export const tickers = {
 	namespaced: true,
@@ -7,8 +8,8 @@ export const tickers = {
 		tickerName: "",
 		tickers: [],
 		availableTickers: [],
-		//selectedTickerName: "",
 		selectedTickers: [],
+		possibleTickers: [],
 	},
 	getters: {
 		tickersNames(state) {
@@ -31,6 +32,7 @@ export const tickers = {
 			}
 
 			state.tickers = [...state.tickers, ticker];
+			state.possibleTickers = [];
 		},
 		deleteTicker(state, name) {
 			state.tickers = state.tickers.filter((t) => t.name !== name);
@@ -42,14 +44,22 @@ export const tickers = {
 				state.tickers[ind].price = data[1];
 			}
 		},
-		// setSelectedTickerName(state, tickerName) {
-		// 	state.selectedTickerName = tickerName;
-		// },
 		setSelectedTickers(state, tickerName) {
 			state.selectedTickers = [...state.selectedTickers, tickerName];
 		},
 		setAvailableTickers(state, tickers) {
 			state.availableTickers = tickers;
+		},
+		setPossibleTickers(state, value) {
+			let tickersArr = state.availableTickers.filter((t) => {
+				return t.includes(value);
+			});
+
+			if (tickersArr.length > 4) {
+				tickersArr = tickersArr.slice(0, MAX_POSSIBLE_TICKERS);
+			}
+
+			state.possibleTickers = tickersArr;
 		},
 	},
 	actions: {
@@ -68,12 +78,5 @@ export const tickers = {
 
 			commit("deleteTicker", tickerName);
 		},
-		// async setSelectedTickers({ commit }, tickerName) {
-		// 	commit("setSelectedTickers", tickerName);
-
-		// 	await subscribeToUpdate(tickerName, (newPrice) => {
-		// 		commit("graph/updateGraph", newPrice, { root: true });
-		// 	});
-		// },
 	},
 };
