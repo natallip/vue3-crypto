@@ -1,21 +1,31 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+import SelectTickers from "../views/SelectTickers.vue";
 
 const routes = [
 	{
 		path: "/",
 		name: "Home",
 		component: Home,
+		meta: {
+			breadcrumbs: [{ name: "select tickers", link: "/selectTickers" }, { name: "home" }],
+		},
 	},
 	{
 		path: "/selectTickers",
-		name: "SelectTickers",
-		component: () => import("../views/SelectTickers.vue"),
+		name: "Select Tickers",
+		component: SelectTickers,
+		meta: {
+			breadcrumbs: [{ name: "home", link: "/" }, { name: "select ticker" }],
+		},
 	},
 	{
 		path: "/singleTicker/:id",
-		name: "SingleTicker",
+		name: "Ticker",
 		component: () => import("../views/SingleTicker.vue"),
+		meta: {
+			breadcrumbs: [{ name: "home", link: "/" }, { name: "ticker" }],
+		},
 	},
 ];
 

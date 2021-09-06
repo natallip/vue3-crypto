@@ -1,5 +1,5 @@
 <template>
-	<app-filter :options="options" :value="value" @filter="$emit('filter', $event)" />
+	<app-filter :options="options" :filterParams="filter" @filter="$emit('filter', $event)" />
 	<app-table :titles="titles" :records="records" />
 	<app-pagination-with-option
 		:pages="pages"
@@ -22,7 +22,7 @@ export default {
 		pages: Number,
 		activePage: Number,
 		options: Array,
-		value: [String, Number],
+		filter: Object,
 	},
 	emits: {
 		click: null,
@@ -31,5 +31,3 @@ export default {
 	},
 };
 </script>
-
-<style></style>

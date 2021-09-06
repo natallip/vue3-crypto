@@ -1,5 +1,5 @@
 <template>
-	<td :class="classes">
+	<td :colspan="colspan" :class="classes">
 		<h2 v-if="type === 'title'">{{ text }}</h2>
 		<img v-if="type === 'image'" :src="src" :alt="alt" class="cell__img" />
 		<router-link v-if="type === 'fullName'" :to="`/singleTicker/${tickerName}`">{{
@@ -18,6 +18,7 @@ export default {
 		alt: String,
 		name: Boolean,
 		tickerName: String,
+		colspan: Number,
 	},
 	computed: {
 		isName() {
@@ -38,7 +39,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .cell {
 	vertical-align: middle;
 	padding: 0 20px;

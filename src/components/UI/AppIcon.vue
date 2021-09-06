@@ -1,6 +1,6 @@
 <template>
 	<div class="icon">
-		<svg :class="id" width="20" height="20">
+		<svg :class="id" :width="width" :height="height">
 			<use :xlink:href="`#${id}`"></use>
 		</svg>
 	</div>
@@ -10,6 +10,8 @@
 export default {
 	props: {
 		id: String,
+		width: [String, Number],
+		height: [String, Number],
 	},
 };
 </script>

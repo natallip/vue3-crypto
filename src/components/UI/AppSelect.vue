@@ -19,13 +19,13 @@ export default {
 	props: {
 		options: Array,
 		text: String,
-		default: String,
+		defaultValue: String,
 	},
 	emits: {
 		change: null,
 	},
 	created() {
-		this.selectedValue = this.default;
+		this.selectedValue = this.defaultValue;
 	},
 };
 </script>
@@ -33,5 +33,10 @@ export default {
 <style>
 select {
 	margin-right: 10px;
+	border: 2px solid #4e0281;
+	padding: 5px;
+	background: #fff;
+	border-radius: 0;
+	outline: transparent;
 }
 </style>

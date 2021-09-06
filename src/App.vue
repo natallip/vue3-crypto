@@ -25,4 +25,9 @@ html {
 hr {
 	margin: 10px 0;
 }
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
 </style>

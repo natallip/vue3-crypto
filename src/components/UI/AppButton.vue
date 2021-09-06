@@ -1,6 +1,6 @@
 <template>
 	<button :class="classes" @click.capture.stop="$emit('click')">
-		<app-icon v-if="icon" :id="icon" />
+		<app-icon v-if="icon" :id="icon" width="20" height="20" />
 		{{ text }}
 	</button>
 </template>

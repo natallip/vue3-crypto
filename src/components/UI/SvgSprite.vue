@@ -51,10 +51,12 @@
 				/>
 			</g>
 		</symbol>
+		<symbol id="trg" viewBox="0 0 30 50">
+			<polygon points="0,0 30,25 0,50" fill="#fff" stroke="#4e0281" stroke-width="1" />
+		</symbol>
 	</svg>
 </template>
 
-<script></script>
 <style>
 .svg-sprite {
 	width: 0;

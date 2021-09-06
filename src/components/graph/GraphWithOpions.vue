@@ -5,7 +5,7 @@
 		<app-select
 			text="Select type"
 			:options="options"
-			:default="type"
+			:defaultValue="type"
 			@change="changeType($event)"
 		/>
 	</div>

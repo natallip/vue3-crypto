@@ -14,9 +14,12 @@
 					:text="val"
 					:src="val"
 					:alt="item.name"
-					:name="key === 'fullName'"
+					:name="isName(key)"
 					:tickerName="item['name']"
 				/>
+			</tr>
+			<tr v-if="isEmpty">
+				<app-cell text="No records" :colspan="titles?.length" />
 			</tr>
 		</tbody>
 	</table>
@@ -30,6 +33,16 @@ export default {
 	props: {
 		titles: Array,
 		records: Array,
+	},
+	computed: {
+		isEmpty() {
+			return !this.records.length;
+		},
+	},
+	methods: {
+		isName(value) {
+			return value === "fullName";
+		},
 	},
 };
 </script>

@@ -25,7 +25,7 @@ export const table = {
 			}
 
 			return [...state.tableRecords].filter((item) => {
-				return normalizeName(item[state.filter.type]).includes(normalizeName(state.filter.value));
+				return item[state.filter.type].includes(normalizeName(state.filter.value));
 			});
 		},
 		records(state, getters) {

@@ -1,12 +1,17 @@
 <template>
 	<div class="filter">
 		<div class="filter__title">Filter:</div>
-		<app-select :options="options" text="Select type" @change="changeType($event)" />
+		<app-select
+			:options="options"
+			:defaultValue="filterParams.type"
+			text="Select type"
+			@change="changeType($event)"
+		/>
 		<app-input
 			type="text"
 			name="filter"
 			placeholder="Find"
-			:value="value"
+			:value="filterParams.value"
 			:disabled="!isSelectOption"
 			@change="filter($event)"
 		/>
@@ -29,14 +34,14 @@ export default {
 	components: { AppSelect, AppInput },
 	props: {
 		options: Array,
-		value: [String, Number],
+		filterParams: Object,
 	},
 	emits: {
 		filter: null,
 	},
 	computed: {
 		isSelectOption() {
-			return this.filterObj.type;
+			return this.filterObj.type || this.filterParams.type;
 		},
 	},
 	methods: {

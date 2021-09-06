@@ -9,9 +9,9 @@
 			:records="records"
 			:pages="pages"
 			:activePage="activePage"
-			:value="filter.value"
+			:filter="filter"
 			@click="changeActivePage($event)"
-			@filter="changeFilter($event)"
+			@filter="changeAndSaveFilter($event)"
 			@change="changeCountOnPage($event.target.value)"
 		/>
 	</div>
@@ -24,21 +24,32 @@ import AppLoader from "@/components/UI/AppLoader.vue";
 import AppNav from "@/components/UI/AppNav.vue";
 
 export default {
-	name: "Home",
+	data() {
+		return {
+			isLoading: false,
+		};
+	},
 	components: { TableWithFilterAndPagination, AppLoader, AppNav },
 	computed: {
 		...mapState("table", ["activePage", "tableRecords", "options", "filter"]),
 		...mapGetters("table", ["pages", "titles", "records", "filteredRecords"]),
-		isLoading() {
-			return !this.records.length;
-		},
 	},
 	async created() {
+		this.isLoading = true;
 		await this.loadInfoForTable();
+		this.isLoading = false;
+
+		if (this.$route.query.type) {
+			this.changeAndSaveFilter({ type: this.$route.query.type, value: this.$route.query.value });
+		}
 	},
 	methods: {
 		...mapMutations("table", ["changeActivePage", "changeFilter", "changeCountOnPage"]),
 		...mapActions("table", ["loadInfoForTable"]),
+		changeAndSaveFilter(filter) {
+			this.changeFilter(filter);
+			this.$router.push({ query: { type: filter.type, value: filter.value } });
+		},
 	},
 };
 </script>
