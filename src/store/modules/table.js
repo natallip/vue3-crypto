@@ -6,7 +6,7 @@ export const table = {
 	state: {
 		tableRecords: [],
 		filter: {
-			type: null,
+			type: "",
 			value: "",
 		},
 		count: 10,
@@ -20,12 +20,16 @@ export const table = {
 			}
 		},
 		filteredRecords(state) {
+			if (!state.filter.type) {
+				return state.tableRecords;
+			}
+
 			if (!state.filter.value) {
 				return state.tableRecords;
 			}
 
 			return [...state.tableRecords].filter((item) => {
-				return item[state.filter.type].includes(normalizeName(state.filter.value));
+				return normalizeName(item[state.filter.type]).includes(normalizeName(state.filter.value));
 			});
 		},
 		records(state, getters) {
@@ -50,8 +54,10 @@ export const table = {
 			state.activePage = number;
 		},
 		changeFilter(state, obj) {
+			console.log(222, obj);
 			state.filter = obj;
 			state.activePage = 1;
+			// console.log(111, state.filter);
 		},
 		changeCountOnPage(state, value) {
 			state.count = value;

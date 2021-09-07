@@ -28,7 +28,7 @@ export default {
 		...mapState("tickers", ["tickerName", "availableTickers", "possibleTickers"]),
 		...mapGetters("tickers", ["tickersNames", "tickers"]),
 		isTickerExist() {
-			return this.tickers.find((t) => t.name === this.tickerName);
+			return [...this.tickers].find((t) => t.name === this.tickerName);
 		},
 		isAvailable() {
 			return this.availableTickers?.find((t) => t === this.tickerName);

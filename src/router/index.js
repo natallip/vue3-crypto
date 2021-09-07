@@ -7,17 +7,11 @@ const routes = [
 		path: "/",
 		name: "Home",
 		component: Home,
-		meta: {
-			breadcrumbs: [{ name: "select tickers", link: "/selectTickers" }, { name: "home" }],
-		},
 	},
 	{
 		path: "/selectTickers",
 		name: "Select Tickers",
 		component: SelectTickers,
-		meta: {
-			breadcrumbs: [{ name: "home", link: "/" }, { name: "select ticker" }],
-		},
 	},
 	{
 		path: "/singleTicker/:id",

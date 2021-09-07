@@ -3,7 +3,7 @@
 		<div class="filter__title">Filter:</div>
 		<app-select
 			:options="options"
-			:defaultValue="filterParams.type"
+			:value="filterParams.type"
 			text="Select type"
 			@change="changeType($event)"
 		/>
@@ -13,7 +13,7 @@
 			placeholder="Find"
 			:value="filterParams.value"
 			:disabled="!isSelectOption"
-			@change="filter($event)"
+			@change="changeValue($event)"
 		/>
 	</div>
 </template>
@@ -53,7 +53,7 @@ export default {
 
 			this.$emit("filter", this.filterObj);
 		},
-		filter(value) {
+		changeValue(value) {
 			this.filterObj.value = value;
 
 			this.$emit("filter", this.filterObj);

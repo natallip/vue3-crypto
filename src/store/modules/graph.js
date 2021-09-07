@@ -67,6 +67,12 @@ export const graph = {
 			state.colors = [color];
 		},
 		addTickerInGraph(state, tickerName) {
+			let item = [...state.series].find((s) => s.name === tickerName);
+
+			if (item) {
+				return;
+			}
+
 			state.series = [...state.series, { name: tickerName, data: [[new Date(), 0]] }];
 		},
 		updateSeries(state, [tickerName, newPrice]) {

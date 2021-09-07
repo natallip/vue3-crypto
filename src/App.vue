@@ -1,14 +1,24 @@
 <template>
+	<app-header />
 	<router-view />
 </template>
 
-<script></script>
+<script>
+import AppHeader from "@/components/UI/AppHeader.vue";
+
+export default {
+	components: { AppHeader },
+};
+</script>
 
 <style>
 body,
 html {
 	padding: 0;
 	margin: 0;
+}
+* {
+	box-sizing: border-box;
 }
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;

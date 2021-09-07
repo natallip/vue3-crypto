@@ -1,5 +1,5 @@
 <template>
-	<select v-model="selectedValue" @change="$emit('change', $event.target.value)">
+	<select :value="value" @change="$emit('change', $event.target.value)">
 		<option disabled value="">{{ text }}</option>
 		<option v-for="item in options" :value="item" :key="item">
 			{{ item }}
@@ -9,23 +9,13 @@
 
 <script>
 export default {
-	data() {
-		return {
-			data: {
-				selectedValue: "",
-			},
-		};
-	},
 	props: {
 		options: Array,
 		text: String,
-		defaultValue: String,
+		value: String,
 	},
 	emits: {
 		change: null,
-	},
-	created() {
-		this.selectedValue = this.defaultValue;
 	},
 };
 </script>

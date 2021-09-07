@@ -6,17 +6,17 @@ export const tickers = {
 	namespaced: true,
 	state: {
 		tickerName: "",
-		tickers: [],
+		tickers: new Set(),
 		availableTickers: [],
 		selectedTickers: [],
 		possibleTickers: [],
 	},
 	getters: {
 		tickersNames(state) {
-			return state.tickers?.map((t) => t.name) || [];
+			return [...state.tickers]?.map((t) => t.name) || [];
 		},
 		tickers(state) {
-			return state.tickers || [];
+			return state.tickers || new Set();
 		},
 		availableTickers(state) {
 			return state.availableTickers || [];
@@ -28,20 +28,23 @@ export const tickers = {
 		},
 		addTicker(state, ticker) {
 			if (!state.tickers) {
-				state.tickers = [];
+				state.tickers = new Set();
 			}
 
-			state.tickers = [...state.tickers, ticker];
+			state.tickers.add(ticker);
 			state.possibleTickers = [];
 		},
 		deleteTicker(state, name) {
-			state.tickers = state.tickers.filter((t) => t.name !== name);
+			state.tickers = [...state.tickers].filter((t) => t.name !== name);
+
+			state.tickers = new Set(state.tickers);
 		},
 		updatePrice(state, data) {
-			const ind = state.tickers.findIndex((t) => t.name === data[0]);
+			const ind = [...state.tickers].findIndex((t) => t.name === data[0]);
 
-			if (state.tickers[ind]) {
-				state.tickers[ind].price = data[1];
+			if ([...state.tickers][ind]) {
+				[...state.tickers][ind].price = data[1];
+				state.tickers = new Set(state.tickers);
 			}
 		},
 		setSelectedTickers(state, tickerName) {

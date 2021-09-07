@@ -1,6 +1,5 @@
 <template>
 	<svg-sprite />
-	<app-nav />
 	<div class="container">
 		<add-ticker />
 		<hr v-if="isEmpty" />
@@ -16,7 +15,6 @@ import AddTicker from "@/components/tickers/AddTicker";
 import ListTickers from "@/components/tickers/ListTickers.vue";
 import AppGraph from "@/components/UI/AppGraph.vue";
 import SvgSprite from "@/components/UI/SvgSprite.vue";
-import AppNav from "@/components/UI/AppNav.vue";
 import { getFromLocalStorage } from "@/services/savingDataInLS";
 
 export default {
@@ -25,13 +23,12 @@ export default {
 		ListTickers,
 		AppGraph,
 		SvgSprite,
-		AppNav,
 	},
 	computed: {
 		...mapGetters("tickers", ["tickers"]),
 		...mapGetters("graph", ["limitedSeries"]),
 		isEmpty() {
-			return this.tickers.length;
+			return this.tickers.size;
 		},
 		isSelected() {
 			return this.limitedSeries.length;
@@ -40,11 +37,13 @@ export default {
 	created() {
 		let savingTickers = getFromLocalStorage();
 
-		savingTickers.forEach(async (t) => {
-			this.addTicker(t);
+		if (!this.tickers.size) {
+			savingTickers.forEach(async (t) => {
+				this.addTicker(t);
 
-			await this.subscribeToUpdate(t.name);
-		});
+				await this.subscribeToUpdate(t.name);
+			});
+		}
 	},
 	methods: {
 		...mapMutations("tickers", [

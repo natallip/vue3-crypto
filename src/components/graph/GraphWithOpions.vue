@@ -46,4 +46,9 @@ export default {
 .graph-options__title {
 	margin-right: 10px;
 }
+.graph-options .input-box input {
+	min-height: 30px;
+	border: 2px solid #4e0281;
+	background-color: #fff;
+}
 </style>

@@ -1,5 +1,4 @@
 <template>
-	<app-nav />
 	<div class="container">
 		<h1>Top coins by their total volume across all markets in the last 24 hours</h1>
 		<app-loader v-if="isLoading" />
@@ -21,7 +20,6 @@
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import TableWithFilterAndPagination from "@/components/table/TableWithFilterAndPagination.vue";
 import AppLoader from "@/components/UI/AppLoader.vue";
-import AppNav from "@/components/UI/AppNav.vue";
 
 export default {
 	data() {
@@ -29,18 +27,22 @@ export default {
 			isLoading: false,
 		};
 	},
-	components: { TableWithFilterAndPagination, AppLoader, AppNav },
+	components: { TableWithFilterAndPagination, AppLoader },
 	computed: {
 		...mapState("table", ["activePage", "tableRecords", "options", "filter"]),
 		...mapGetters("table", ["pages", "titles", "records", "filteredRecords"]),
 	},
 	async created() {
 		this.isLoading = true;
+
 		await this.loadInfoForTable();
+
 		this.isLoading = false;
 
 		if (this.$route.query.type) {
 			this.changeAndSaveFilter({ type: this.$route.query.type, value: this.$route.query.value });
+		} else {
+			this.changeAndSaveFilter({ type: "", value: "" });
 		}
 	},
 	methods: {
@@ -48,7 +50,10 @@ export default {
 		...mapActions("table", ["loadInfoForTable"]),
 		changeAndSaveFilter(filter) {
 			this.changeFilter(filter);
-			this.$router.push({ query: { type: filter.type, value: filter.value } });
+
+			if (filter.type) {
+				this.$router.push({ query: { type: filter.type, value: filter.value } });
+			}
 		},
 	},
 };

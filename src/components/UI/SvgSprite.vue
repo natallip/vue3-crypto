@@ -52,7 +52,7 @@
 			</g>
 		</symbol>
 		<symbol id="trg" viewBox="0 0 30 50">
-			<polygon points="0,0 30,25 0,50" fill="#fff" stroke="#4e0281" stroke-width="1" />
+			<polygon points="0,0 30,25 0,50" fill="#fff" stroke="#4e0281" stroke-width="2" />
 		</symbol>
 	</svg>
 </template>
