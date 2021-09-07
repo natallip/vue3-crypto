@@ -54,10 +54,8 @@ export const table = {
 			state.activePage = number;
 		},
 		changeFilter(state, obj) {
-			console.log(222, obj);
 			state.filter = obj;
 			state.activePage = 1;
-			// console.log(111, state.filter);
 		},
 		changeCountOnPage(state, value) {
 			state.count = value;
