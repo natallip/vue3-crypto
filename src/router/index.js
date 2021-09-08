@@ -17,9 +17,9 @@ const routes = [
 	{
 		path: `${SINGLE_TICKER}/:id`,
 		name: "Ticker",
-		component: () => import("../views/SingleTicker.vue"),
+		component: () => import("@/views/SingleTicker.vue"),
 		meta: {
-			breadcrumbs: [{ name: "home", link: "/" }, { name: "ticker" }],
+			breadcrumbs: [{ name: "home", link: HOME }, { name: "ticker" }],
 		},
 	},
 ];
