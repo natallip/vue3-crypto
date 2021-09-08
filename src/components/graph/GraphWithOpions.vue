@@ -2,12 +2,7 @@
 	<app-graph />
 	<div class="graph-options">
 		<div class="graph-options__title">Select a type of the chart:</div>
-		<app-select
-			text="Select type"
-			:options="options"
-			:defaultValue="type"
-			@change="changeType($event)"
-		/>
+		<app-select text="Select type" :options="types" :value="type" @change="changeType($event)" />
 	</div>
 	<div class="graph-options">
 		<div class="graph-options__title">Select a color of the chart:</div>
@@ -23,13 +18,8 @@ import AppInput from "@/components/UI/AppInput.vue";
 
 export default {
 	components: { AppGraph, AppSelect, AppInput },
-	data() {
-		return {
-			options: ["area", "line", "bar"],
-		};
-	},
 	computed: {
-		...mapState("graph", ["type"]),
+		...mapState("graph", ["type", "types"]),
 	},
 	methods: {
 		...mapMutations("graph", ["changeType", "changeColor"]),

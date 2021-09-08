@@ -43,7 +43,7 @@ export const table = {
 			return getters.filteredRecords.slice(start, end);
 		},
 		pages(state, getters) {
-			return Math.ceil(getters.filteredRecords.length / state.count);
+			return Math.ceil(getters.filteredRecords.length / state.count) || 0;
 		},
 	},
 	mutations: {

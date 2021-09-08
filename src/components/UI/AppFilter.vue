@@ -19,18 +19,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import AppInput from "@/components/UI/AppInput.vue";
 import AppSelect from "@/components/UI/AppSelect.vue";
 
 export default {
-	data() {
-		return {
-			filterObj: {
-				type: null,
-				value: "",
-			},
-		};
-	},
 	components: { AppSelect, AppInput },
 	props: {
 		options: Array,
@@ -40,23 +33,25 @@ export default {
 		filter: null,
 	},
 	computed: {
+		...mapState("table", ["filter"]),
 		isSelectOption() {
-			return this.filterObj.type || this.filterParams.type;
+			return !!this.filter.type;
 		},
 	},
 	methods: {
 		changeType(type) {
-			this.filterObj = {
+			this.$emit("filter", {
 				type,
 				value: "",
-			};
-
-			this.$emit("filter", this.filterObj);
+			});
 		},
 		changeValue(value) {
-			this.filterObj.value = value;
-
-			this.$emit("filter", this.filterObj);
+			if (this.filter.type) {
+				this.$emit("filter", {
+					type: this.filter.type,
+					value,
+				});
+			}
 		},
 	},
 };

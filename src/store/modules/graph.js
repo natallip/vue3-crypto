@@ -4,6 +4,7 @@ import { MAX_COLS_IN_GRAPH } from "@/constants/index";
 export const graph = {
 	namespaced: true,
 	state: {
+		types: ["area", "line", "bar"],
 		type: "area",
 		colors: undefined,
 		series: [],

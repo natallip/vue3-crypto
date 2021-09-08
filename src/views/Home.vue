@@ -29,8 +29,8 @@ export default {
 	},
 	components: { TableWithFilterAndPagination, AppLoader },
 	computed: {
-		...mapState("table", ["activePage", "tableRecords", "options", "filter"]),
-		...mapGetters("table", ["pages", "titles", "records", "filteredRecords"]),
+		...mapState("table", ["activePage", "options", "filter"]),
+		...mapGetters("table", ["pages", "titles", "records"]),
 	},
 	async created() {
 		this.isLoading = true;

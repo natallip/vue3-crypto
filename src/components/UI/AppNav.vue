@@ -9,12 +9,14 @@
 </template>
 
 <script>
+import { HOME, SELECT_TICKERS } from "@/router/constants";
+
 export default {
 	data() {
 		return {
 			menu: [
-				{ name: "home", link: "/" },
-				{ name: "select tickers", link: "/selectTickers" },
+				{ name: "home", link: HOME },
+				{ name: "select tickers", link: SELECT_TICKERS },
 			],
 		};
 	},

@@ -25,7 +25,7 @@ import { setInLocalStorage } from "@/services/savingDataInLS";
 export default {
 	components: { AppButton, AppInput, PossibleTickers },
 	computed: {
-		...mapState("tickers", ["tickerName", "availableTickers", "possibleTickers"]),
+		...mapState("tickers", ["tickerName", "availableTickers"]),
 		...mapGetters("tickers", ["tickersNames", "tickers"]),
 		isTickerExist() {
 			return [...this.tickers].find((t) => t.name === this.tickerName);

@@ -13,7 +13,7 @@
 			/>
 		</template>
 	</div>
-	<template v-if="selected !== 'all'">
+	<template v-if="hasPages">
 		<app-pagination :pages="pages" :activePage="activePage" @click="$emit('click', $event)" />
 	</template>
 </template>
@@ -36,6 +36,11 @@ export default {
 	emits: {
 		click: null,
 		change: null,
+	},
+	computed: {
+		hasPages() {
+			return this.selected !== "all";
+		},
 	},
 	methods: {
 		isChecked(value) {

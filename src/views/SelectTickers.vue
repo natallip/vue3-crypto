@@ -46,13 +46,8 @@ export default {
 		}
 	},
 	methods: {
-		...mapMutations("tickers", [
-			"addTicker",
-			"updateTickers",
-			"changeTickerName",
-			"setPossibleTickers",
-		]),
-		...mapActions("tickers", ["subscribeToUpdate", "loadAvailableTickers"]),
+		...mapMutations("tickers", ["addTicker"]),
+		...mapActions("tickers", ["subscribeToUpdate"]),
 	},
 };
 </script>

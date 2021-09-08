@@ -31,6 +31,7 @@ export default {
 				this.breadcrumbsList.map((item) => {
 					if (item.name === "ticker") {
 						item.name = this.$route.params.id;
+
 						return;
 					}
 				});

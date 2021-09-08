@@ -1,15 +1,15 @@
 <template>
 	<td :colspan="colspan" :class="classes">
-		<h2 v-if="type === 'title'">{{ text }}</h2>
-		<img v-if="type === 'image'" :src="src" :alt="alt" class="cell__img" />
-		<router-link v-if="type === 'fullName'" :to="`/singleTicker/${tickerName}`">{{
-			text
-		}}</router-link>
+		<h2 v-if="isTitle">{{ text }}</h2>
+		<img v-if="isImage" class="cell__img" :src="src" :alt="alt" />
+		<router-link v-if="isFullName" :to="link">{{ text }}</router-link>
 		<p v-if="isText">{{ text }}</p>
 	</td>
 </template>
 
 <script>
+import { SINGLE_TICKER } from "@/router/constants";
+
 export default {
 	props: {
 		type: String,
@@ -21,8 +21,20 @@ export default {
 		colspan: Number,
 	},
 	computed: {
+		link() {
+			return `${SINGLE_TICKER}/${this.tickerName}`;
+		},
+		isTitle() {
+			return this.type === "title";
+		},
+		isImage() {
+			return this.type === "image";
+		},
+		isFullName() {
+			return this.type === "fullName";
+		},
 		isName() {
-			return this.name;
+			return !!this.name;
 		},
 		isText() {
 			return this.type !== "title" && this.type !== "image" && this.type !== "fullName";

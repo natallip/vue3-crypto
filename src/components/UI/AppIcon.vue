@@ -1,7 +1,7 @@
 <template>
 	<div class="icon">
 		<svg :class="id" :width="width" :height="height">
-			<use :xlink:href="`#${id}`"></use>
+			<use :xlink:href="iconId"></use>
 		</svg>
 	</div>
 </template>
@@ -12,6 +12,11 @@ export default {
 		id: String,
 		width: [String, Number],
 		height: [String, Number],
+	},
+	computed: {
+		iconId() {
+			return `#${this.id}`;
+		},
 	},
 };
 </script>

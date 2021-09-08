@@ -1,4 +1,4 @@
-import { API_KEY, AGGREGATE_INDEX } from "../constants/index";
+import { API_KEY, AGGREGATE_INDEX } from "@/constants/index";
 
 const tickersHandlers = new Map();
 
