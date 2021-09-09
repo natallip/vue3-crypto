@@ -1,21 +1,22 @@
 <template>
 	<svg-sprite />
-	<div class="container">
+	<main-layout>
 		<add-ticker />
 		<hr v-if="isEmpty" />
 		<list-tickers />
 		<hr v-if="isEmpty" />
 		<app-graph v-if="isSelected" />
-	</div>
+	</main-layout>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import { getFromLocalStorage } from "@/services/savingDataInLS";
 import AddTicker from "@/components/tickers/AddTicker";
 import ListTickers from "@/components/tickers/ListTickers.vue";
 import AppGraph from "@/components/UI/AppGraph.vue";
 import SvgSprite from "@/components/UI/SvgSprite.vue";
-import { getFromLocalStorage } from "@/services/savingDataInLS";
+import MainLayout from "@/layouts/mainLayout.vue";
 
 export default {
 	components: {
@@ -23,6 +24,7 @@ export default {
 		ListTickers,
 		AppGraph,
 		SvgSprite,
+		MainLayout,
 	},
 	computed: {
 		...mapGetters("tickers", ["tickers"]),
@@ -38,10 +40,10 @@ export default {
 		let savingTickers = getFromLocalStorage();
 
 		if (!this.tickers.size) {
-			savingTickers.forEach(async (t) => {
+			savingTickers?.forEach((t) => {
 				this.addTicker(t);
 
-				await this.subscribeToUpdate(t.name);
+				this.subscribeToUpdate(t.name);
 			});
 		}
 	},
@@ -51,21 +53,3 @@ export default {
 	},
 };
 </script>
-
-<style>
-#app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-}
-.container {
-	max-width: 1200px;
-	width: 90%;
-	margin: 0 auto;
-}
-hr {
-	margin: 20px 0;
-}
-</style>

@@ -1,24 +1,28 @@
-import { loadInfoForTable } from "@/services/loadCoinsLast24hours";
+import { loadCoinInfo } from "@/services/loadCoinsLast24hours";
 import { normalizeName } from "@/utils/normalizeName";
 
 export const table = {
 	namespaced: true,
 	state: {
 		tableRecords: [],
+		titles: [
+			{ name: "Image", type: "image", title: true },
+			{ name: "Name", type: "name", title: true },
+			{ name: "Full Name", type: "fullName", title: true },
+			{ name: "Price", type: "price", title: true },
+			{ name: "High Day", type: "highDay", title: true },
+			{ name: "Low Day", type: "lowDay", title: true },
+			{ name: "Change Day", type: "changeDay", title: true },
+		],
 		filter: {
 			type: "",
 			value: "",
 		},
 		count: 10,
 		activePage: 1,
-		options: ["name", "fullName"],
+		options: ["", "name", "fullName"],
 	},
 	getters: {
-		titles(state) {
-			if (state.tableRecords[0]) {
-				return Object.keys(state.tableRecords[0]);
-			}
-		},
 		filteredRecords(state) {
 			if (!state.filter.type) {
 				return state.tableRecords;
@@ -47,7 +51,7 @@ export const table = {
 		},
 	},
 	mutations: {
-		setInfoForTable(state, data) {
+		setCoinInfo(state, data) {
 			state.tableRecords = data;
 		},
 		changeActivePage(state, number) {
@@ -63,10 +67,10 @@ export const table = {
 		},
 	},
 	actions: {
-		async loadInfoForTable({ commit }, tickersNames) {
-			const data = await loadInfoForTable(tickersNames);
+		async loadCoinInfo({ commit }, tickersNames) {
+			const data = await loadCoinInfo(tickersNames);
 
-			commit("setInfoForTable", data);
+			commit("setCoinInfo", data);
 		},
 	},
 };

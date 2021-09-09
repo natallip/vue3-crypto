@@ -54,6 +54,11 @@ export const tickers = {
 			state.availableTickers = tickers;
 		},
 		setPossibleTickers(state, value) {
+			if (!value) {
+				state.possibleTickers = [];
+				return;
+			}
+
 			let tickersArr = state.availableTickers.filter((t) => {
 				return t.includes(value);
 			});

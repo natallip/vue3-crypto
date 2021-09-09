@@ -27,17 +27,9 @@ html {
 	text-align: center;
 	color: #2c3e50;
 }
-.container {
-	max-width: 1200px;
-	width: 90%;
-	margin: 0 auto;
-}
-hr {
-	margin: 10px 0;
-}
 ul {
+	list-style: none;
 	padding: 0;
 	margin: 0;
-	list-style: none;
 }
 </style>

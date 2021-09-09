@@ -1,14 +1,14 @@
 <template>
 	<div class="breadcrumbs-wrap">
 		<ul class="breadcrumbs">
-			<li
-				v-for="(item, ind) in breadcrumbsList"
-				:key="item"
+			<router-link
+				v-for="item in breadcrumbsList"
 				class="breadcrumbs__link"
-				@click="routeTo(ind)"
+				:key="item.name"
+				:to="item.link"
 			>
 				{{ item.name }}
-			</li>
+			</router-link>
 		</ul>
 	</div>
 </template>
@@ -31,8 +31,7 @@ export default {
 				this.breadcrumbsList.map((item) => {
 					if (item.name === "ticker") {
 						item.name = this.$route.params.id;
-
-						return;
+						item.link = this.$route.path;
 					}
 				});
 			}

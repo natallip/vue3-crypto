@@ -1,8 +1,10 @@
 <template>
-	<div class="container">
+	<main-layout>
 		<h1>Top coins by their total volume across all markets in the last 24 hours</h1>
 		<app-loader v-if="isLoading" />
-		<table-with-filter-and-pagination
+		<table-with-options
+			:hasFilter="true"
+			:hasPagination="true"
 			:options="options"
 			:titles="titles"
 			:records="records"
@@ -13,13 +15,14 @@
 			@filter="changeAndSaveFilter($event)"
 			@change="changeCountOnPage($event.target.value)"
 		/>
-	</div>
+	</main-layout>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
-import TableWithFilterAndPagination from "@/components/table/TableWithFilterAndPagination.vue";
+import TableWithOptions from "@/components/table/TableWithOptions.vue";
 import AppLoader from "@/components/UI/AppLoader.vue";
+import MainLayout from "@/layouts/mainLayout.vue";
 
 export default {
 	data() {
@@ -27,27 +30,27 @@ export default {
 			isLoading: false,
 		};
 	},
-	components: { TableWithFilterAndPagination, AppLoader },
+	components: { TableWithOptions, AppLoader, MainLayout },
 	computed: {
-		...mapState("table", ["activePage", "options", "filter"]),
-		...mapGetters("table", ["pages", "titles", "records"]),
+		...mapState("table", ["titles", "activePage", "options", "filter"]),
+		...mapGetters("table", ["pages", "records"]),
 	},
 	async created() {
 		this.isLoading = true;
 
-		await this.loadInfoForTable();
+		await this.loadCoinInfo();
 
 		this.isLoading = false;
 
-		if (this.$route.query.type) {
-			this.changeAndSaveFilter({ type: this.$route.query.type, value: this.$route.query.value });
-		} else {
-			this.changeAndSaveFilter({ type: "", value: "" });
+		const { type, value } = this.$route.query;
+
+		if (type) {
+			this.changeAndSaveFilter({ type, value });
 		}
 	},
 	methods: {
 		...mapMutations("table", ["changeActivePage", "changeFilter", "changeCountOnPage"]),
-		...mapActions("table", ["loadInfoForTable"]),
+		...mapActions("table", ["loadCoinInfo"]),
 		changeAndSaveFilter(filter) {
 			this.changeFilter(filter);
 

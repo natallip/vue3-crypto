@@ -53,6 +53,5 @@ export default {
 	margin: 30px 0;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 }
 </style>

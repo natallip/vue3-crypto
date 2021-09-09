@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import SelectTickers from "@/views/SelectTickers.vue";
-import { HOME, SELECT_TICKERS, SINGLE_TICKER } from "@/router/constants";
+import { HOME, SELECT_TICKERS } from "@/router/constants";
 
 const routes = [
 	{
@@ -15,7 +15,7 @@ const routes = [
 		component: SelectTickers,
 	},
 	{
-		path: `${SINGLE_TICKER}/:id`,
+		path: "/:id",
 		name: "Ticker",
 		component: () => import("@/views/SingleTicker.vue"),
 		meta: {

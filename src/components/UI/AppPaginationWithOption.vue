@@ -58,7 +58,6 @@ export default {
 	margin: 10px 0;
 	display: flex;
 	align-items: baseline;
-	justify-content: center;
 }
 .toggle-count span {
 	margin-right: 15px;

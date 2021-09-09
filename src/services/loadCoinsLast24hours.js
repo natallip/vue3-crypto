@@ -1,9 +1,9 @@
 import { axiosInstance } from "./index";
 import { URL_INFO, DEFAULT_CURRENCY, LIMIT_COUNT_FOR_REQUEST, API_KEY } from "../constants/index";
 
-export const loadInfoForTable = async () => {
+export const loadCoinInfo = async () => {
 	const {
-		data: { Data }
+		data: { Data },
 	} = await axiosInstance({
 		url: URL_INFO,
 		params: {
@@ -21,7 +21,7 @@ export const loadInfoForTable = async () => {
 			price: item.DISPLAY?.USD.PRICE,
 			highDay: item.DISPLAY?.USD.HIGHDAY,
 			lowDay: item.DISPLAY?.USD.LOWDAY,
-			changeDay: item.DISPLAY?.USD.CHANGEDAY
+			changeDay: item.DISPLAY?.USD.CHANGEDAY,
 		};
 	});
 

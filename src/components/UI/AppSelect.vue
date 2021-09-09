@@ -1,6 +1,5 @@
 <template>
 	<select :value="value" @change="$emit('change', $event.target.value)">
-		<option disabled value="">{{ text }}</option>
 		<option v-for="item in options" :value="item" :key="item">
 			{{ item }}
 		</option>

@@ -1,71 +1,72 @@
 <template>
-	<td :colspan="colspan" :class="classes">
-		<h2 v-if="isTitle">{{ text }}</h2>
-		<img v-if="isImage" class="cell__img" :src="src" :alt="alt" />
-		<router-link v-if="isFullName" :to="link">{{ text }}</router-link>
-		<p v-if="isText">{{ text }}</p>
-	</td>
+	<div :class="classes">
+		<img v-if="isImage" class="td__img" :src="src" :alt="alt" />
+		<div v-else>{{ text }}</div>
+	</div>
 </template>
 
 <script>
-import { SINGLE_TICKER } from "@/router/constants";
-
 export default {
 	props: {
 		type: String,
 		text: String,
 		src: String,
 		alt: String,
-		name: Boolean,
-		tickerName: String,
-		colspan: Number,
+		title: Boolean,
 	},
 	computed: {
-		link() {
-			return `${SINGLE_TICKER}/${this.tickerName}`;
-		},
-		isTitle() {
-			return this.type === "title";
-		},
 		isImage() {
-			return this.type === "image";
-		},
-		isFullName() {
-			return this.type === "fullName";
-		},
-		isName() {
-			return !!this.name;
-		},
-		isText() {
-			return this.type !== "title" && this.type !== "image" && this.type !== "fullName";
+			return this.type === "image" && !this.title;
 		},
 		classes() {
-			let classes = ["cell"];
-
-			if (this.isName) classes.push("cell--fix");
-			if (this.type === "title") classes.push("cell--bg");
-
-			return classes;
+			return `td td--${this.type}`;
 		},
 	},
 };
 </script>
 
 <style>
-.cell {
-	vertical-align: middle;
-	padding: 0 20px;
-	min-width: 100px;
+a {
+	text-decoration: none;
+	color: #111;
 }
-.cell__img {
+.td {
+	display: flex;
+	padding: 10px 20px;
+	min-width: 100px;
+	flex-shrink: 0;
+	flex-grow: 0;
+}
+.td__img {
 	width: 30px;
 	height: 30px;
 	object-fit: contain;
 }
-.cell--fix {
-	min-width: 200px;
+.td {
+	width: 200px;
 }
-.cell--bg {
+.td--title {
+	font-weight: bold;
+}
+.td--name,
+.td--fullName {
+	width: 130px;
+}
+.td--fullName {
+	width: 200px;
+}
+.td--image {
+	width: 150px;
+	justify-content: center;
+}
+.td--price,
+.td--highDay,
+.td--lowDay,
+.td--changeDay {
+	width: 180px;
+	justify-content: flex-end;
+}
+.td--bg {
 	background: #4e0281;
 	color: #fff;
 	font-size: 1rem;

@@ -1,11 +1,11 @@
 <template>
-	<div class="nav">
+	<nav class="nav">
 		<div class="nav__list">
 			<router-link class="nav__link" v-for="item in menu" :key="item.name" :to="item.link" exact>{{
 				item.name
 			}}</router-link>
 		</div>
-	</div>
+	</nav>
 </template>
 
 <script>

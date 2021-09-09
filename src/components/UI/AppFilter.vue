@@ -62,7 +62,6 @@ export default {
 	margin: 20px auto;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 }
 .filter__title {
 	margin-right: 10px;
