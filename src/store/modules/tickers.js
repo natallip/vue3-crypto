@@ -59,11 +59,15 @@ export const tickers = {
 				return;
 			}
 
+			let tickersNames = [...state.tickers]?.map((t) => t.name) || [];
+
 			let tickersArr = state.availableTickers.filter((t) => {
 				return t.includes(value);
 			});
 
-			if (tickersArr.length > 4) {
+			tickersArr = tickersArr.filter((t) => !tickersNames.includes(t));
+
+			if (tickersArr.length > MAX_POSSIBLE_TICKERS) {
 				tickersArr = tickersArr.slice(0, MAX_POSSIBLE_TICKERS);
 			}
 

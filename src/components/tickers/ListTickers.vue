@@ -5,7 +5,7 @@
 			class="tickers__item"
 			:key="ticker"
 			:class="{ active: isSelected(ticker.name) }"
-			@click="setSeries(ticker.name)"
+			@click="toggleSeries(ticker.name)"
 		>
 			<app-ticker :ticker="ticker" @delete="remove" />
 		</li>
@@ -33,6 +33,9 @@ export default {
 			this.deleteTicker(tickerName);
 
 			setInLocalStorage(this.tickersNames);
+		},
+		toggleSeries(tickerName) {
+			this.isSelected(tickerName) ? this.removeSeries(tickerName) : this.setSeries(tickerName);
 		},
 		isSelected(tickerName) {
 			return this.limitedSeries.find((t) => {

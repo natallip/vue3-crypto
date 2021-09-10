@@ -1,25 +1,39 @@
 <template>
 	<div class="possibleTickers">
 		<template v-for="ticker in possibleTickers" :key="ticker">
-			<app-button type="success" :text="ticker" @click="changeTickerName(ticker)" />
+			<app-checkbox :text="ticker" @change="change" />
 		</template>
 	</div>
 </template>
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import AppButton from "@/components/UI/AppButton.vue";
+import AppCheckbox from "@/components/UI/AppCheckbox.vue";
 
 export default {
-	components: { AppButton },
+	components: { AppCheckbox },
+	data() {
+		return {
+			checkedValues: [],
+		};
+	},
 	computed: {
 		...mapState("tickers", ["possibleTickers"]),
 	},
 	emits: {
-		click: null,
+		change: null,
 	},
 	methods: {
 		...mapMutations("tickers", ["changeTickerName"]),
+		change(value, isChecked) {
+			if (!isChecked) {
+				this.checkedValues = this.checkedValues.filter((v) => v !== value);
+			} else {
+				this.checkedValues.push(value);
+			}
+
+			this.$emit("change", this.checkedValues);
+		},
 	},
 };
 </script>

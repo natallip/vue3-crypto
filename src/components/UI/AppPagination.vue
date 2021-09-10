@@ -2,13 +2,13 @@
 	<div class="pagination">
 		<app-button
 			v-if="activePage > 1"
-			type="pagination"
+			type="primary2"
 			text="prev"
 			@click="$emit('click', activePage - 1)"
 		/>
 		<app-button
 			v-for="page in pages"
-			type="pagination"
+			type="primary2"
 			:key="page"
 			:text="page"
 			:class="{ 'button--active': isActive(page) }"
@@ -16,7 +16,7 @@
 		/>
 		<app-button
 			v-if="hasNextPage"
-			type="pagination"
+			type="primary2"
 			text="next"
 			@click="$emit('click', activePage + 1)"
 		/>

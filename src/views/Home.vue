@@ -42,7 +42,8 @@ export default {
 
 		this.isLoading = false;
 
-		const { type, value } = this.$route.query;
+		const { filter } = this.$route.query;
+		const [type, value] = filter?.split("=") || [];
 
 		if (type) {
 			this.changeAndSaveFilter({ type, value });
@@ -55,7 +56,7 @@ export default {
 			this.changeFilter(filter);
 
 			if (filter.type) {
-				this.$router.push({ query: { type: filter.type, value: filter.value } });
+				this.$router.push({ query: { filter: `${filter.type}=${filter.value}` } });
 			}
 		},
 	},

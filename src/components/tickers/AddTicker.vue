@@ -7,10 +7,10 @@
 			type="text"
 			:value="tickerName"
 			@change="setTickerName"
-			@enter="add"
+			@enter="addOneTicker"
 		/>
-		<possible-tickers />
-		<app-button type="primary" icon="add" text="Add" @click="add" />
+		<possible-tickers @change="setCheckedTickers" />
+		<app-button v-if="!isDisabled" type="primary" icon="add" text="Add" @click="addArrTickers" />
 	</div>
 </template>
 
@@ -24,14 +24,22 @@ import { setInLocalStorage } from "@/services/savingDataInLS";
 
 export default {
 	components: { AppButton, AppInput, PossibleTickers },
+	data() {
+		return {
+			checkedTickers: [],
+		};
+	},
 	computed: {
 		...mapState("tickers", ["tickerName", "availableTickers"]),
 		...mapGetters("tickers", ["tickersNames", "tickers"]),
 		isTickerExist() {
-			return [...this.tickers].find((t) => t.name === this.tickerName);
+			return [...this.tickers].find((el) => el.name === this.tickerName);
 		},
 		isAvailable() {
 			return this.availableTickers?.find((t) => t === this.tickerName);
+		},
+		isDisabled() {
+			return !this.checkedTickers.length;
 		},
 	},
 	async created() {
@@ -49,7 +57,17 @@ export default {
 			this.setPossibleTickers(normalizeName(value));
 			this.changeTickerName(normalizeName(value));
 		},
+		setCheckedTickers(values) {
+			this.checkedTickers = values;
+		},
 		async add() {
+			setInLocalStorage(this.tickersNames);
+
+			await this.subscribeToUpdate(this.tickerName);
+
+			this.changeTickerName("");
+		},
+		addOneTicker() {
 			if (!this.tickerName || this.isTickerExist || !this.isAvailable) {
 				this.changeTickerName("");
 
@@ -61,11 +79,17 @@ export default {
 				price: "-",
 			});
 
-			setInLocalStorage(this.tickersNames);
+			this.add();
+		},
+		addArrTickers() {
+			this.checkedTickers.forEach((el) => {
+				this.addTicker({
+					name: el,
+					price: "-",
+				});
+			});
 
-			await this.subscribeToUpdate(this.tickerName);
-
-			this.changeTickerName("");
+			this.add();
 		},
 	},
 };

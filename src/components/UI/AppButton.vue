@@ -12,6 +12,7 @@ export default {
 		type: String,
 		icon: String,
 		text: [String, Number],
+		disabled: Boolean,
 	},
 	components: {
 		AppIcon,
@@ -45,19 +46,16 @@ export default {
 .button--primary {
 	background: #555;
 	color: #fff;
-	padding: 5px;
-	border-radius: 18px;
+	padding: 5px 8px;
 }
 .button--success {
 	background: #00694a;
 	color: #fff;
-	padding: 5px;
-	border-radius: 18px;
+	padding: 5px 8px;
 }
 .button--warn {
 	background: #9c0707;
-	border-radius: 18px;
-	padding: 5px;
+	padding: 5px 8px;
 	color: #fff;
 }
 .button--close {
@@ -66,7 +64,7 @@ export default {
 	outline: transparent;
 	padding: 0;
 }
-.button--pagination {
+.button--primary2 {
 	background: transparent;
 	border: 2px solid #555;
 	color: #555;
@@ -76,5 +74,8 @@ export default {
 .button--active {
 	background: #4e0281;
 	color: #fff;
+}
+button:disabled {
+	opacity: 0.5;
 }
 </style>
